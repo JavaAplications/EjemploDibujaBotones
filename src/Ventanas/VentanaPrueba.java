@@ -1,7 +1,6 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
@@ -10,18 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import BBDD.Conexion;
 import Hilos.ThreadGrafRadios;
 
 
-import javax.swing.JLabel;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.FlowLayout;
+import Objetos.btn_Radiobase;
+
+import javax.swing.JLabel;
 
 public class VentanaPrueba extends JFrame {
 
@@ -31,12 +26,14 @@ public class VentanaPrueba extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	JButton boton,btn_Iniciar;
+	btn_Radiobase prueba;
 	private JButton btn_CrearRadio;
 	JPanel panel;
 	Conexion con;
+	
 	ThreadGrafRadios graficar;
 	private JPanel panel_1;
-	private JLabel lblNewLabel;
+	private JLabel lbl_ID;
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private JButton btn_Configuracion;
@@ -90,18 +87,30 @@ public class VentanaPrueba extends JFrame {
 		getContentPane().add(barras,BorderLayout.CENTER);
 		barras.add(panel);
 		
-		panel.setLayout(new GridLayout(10,100,3,3));
+		panel.setLayout(new GridLayout(15,10,3,3));
 		
 		
 		
 		panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		lblNewLabel = new JLabel("New label");
-		panel_1.add(lblNewLabel);
+		lbl_ID = new JLabel("ID");
+		panel_1.add(lbl_ID);
+		
 		
 		btn_Iniciar   =  new JButton("Encender");
 		panel_1.add(btn_Iniciar);
+		
+		prueba = new btn_Radiobase(1);
+		prueba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lbl_ID.setText(String.valueOf(prueba.ID()));
+				
+			}
+		});
+		prueba.setText("BOTON DE PRUEBA");
+		panel_1.add(prueba);
+			
 		
 		panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);

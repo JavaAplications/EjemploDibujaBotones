@@ -110,8 +110,7 @@ boolean go=true;
 		
  		private boolean ConsultaSiOnline(int IdRadio){
 		
- 			int antes= (int) System.currentTimeMillis();
-			boolean OnLine=false;
+ 				boolean OnLine=false;
 		
 			con=new Conexion();
 			ResultSet rs=con.ConsultarRadiosOnline();
@@ -122,7 +121,7 @@ boolean go=true;
 					RadioRS=rs.getInt("IdRadios");
 						if(IdRadio==RadioRS){
 							CantidadKA=rs.getInt("Cantidad");
-							
+							System.out.println("CantidadKA:"+CantidadKA);
 							OnLine=true;
 					}
 					
@@ -133,8 +132,8 @@ boolean go=true;
 				e.printStackTrace();
 			}
 			
-			int despues= (int) System.currentTimeMillis();
-			System.out.println("Tiempo:"+String.valueOf(despues-antes));
+		//	int despues= (int) System.currentTimeMillis();
+		//	System.out.println("Tiempo:"+String.valueOf(despues-antes));
 			return OnLine;
 			
 			
