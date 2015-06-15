@@ -126,7 +126,7 @@ public class VentanaPrueba extends JFrame {
 		btn_Online.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				ThreadAlarmas CheckAlarmas=new ThreadAlarmas();
+				ThreadAlarmas CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
 				CheckAlarmas.start();
 				
 			}
