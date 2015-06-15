@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import BBDD.Conexion;
+import Hilos.ThreadAlarmas;
 import Hilos.ThreadGrafRadiosIDs;
 import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
@@ -113,6 +114,7 @@ public class VentanaPrueba extends JFrame {
 		btn_CrearRadio =  new JButton("CREAR RADIOBASE");
 		btn_CrearRadio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		panel_3.add(btn_CrearRadio);
@@ -124,8 +126,8 @@ public class VentanaPrueba extends JFrame {
 		btn_Online.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-		     ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
-		     pintar.start();
+				ThreadAlarmas CheckAlarmas=new ThreadAlarmas();
+				CheckAlarmas.start();
 				
 			}
 		});

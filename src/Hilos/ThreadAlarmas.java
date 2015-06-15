@@ -10,7 +10,7 @@ public class ThreadAlarmas extends Thread{
 	Conexion con;
 	
 	public ThreadAlarmas(){
-		con.Conectar();
+		con=new Conexion();
 		
 		
 		
@@ -18,7 +18,7 @@ public class ThreadAlarmas extends Thread{
 	
 	public void run(){
 		
-		
+		System.out.println("check alñarmas");
 		
 		
 		
