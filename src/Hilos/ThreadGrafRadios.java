@@ -63,7 +63,7 @@ boolean go=true;
 						
 						boolean pepe=ConsultaSiOnline(i);
 						if(pepe){
-							if(CantidadKA>1) {btn_Radio.setBackground(Color.ORANGE);}
+							if(3>CantidadKA) {btn_Radio.setBackground(Color.ORANGE);}
 							else{
 								btn_Radio.setBackground(Color.GREEN);
 							}
