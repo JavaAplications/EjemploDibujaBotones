@@ -51,6 +51,29 @@ public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 	
 }
 
+public void InsertarChecked(int IdEvento){
+
+	
+	con=Conectar();
+	
+	PreparedStatement pst;
+	try {
+		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdEvento`='"+IdEvento+"'");
+	
+		pst.setBoolean(1,true);
+		
+		pst.execute();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	
+	
+	
+	
+}
+
 public ResultSet ConsultarRadiosOnline()
 {
 	con=Conectar();
@@ -79,6 +102,24 @@ public ResultSet ConsultarRadiosOnline()
 	
 }
 
+public ResultSet ConsultarInfoRadiobase(int IdRadiobase){
+
+con=Conectar();
+	
+    Statement st;
+	ResultSet rs = null;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `IdRadios`='"+IdRadiobase+"'");
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+              }
+
+	
+	
+	return rs;
+}
 
 public String ConsultarNombre(int IdRadiobase)
 {
@@ -152,6 +193,29 @@ public int CantidadRadiobases()
 	
 	return cantidad;
 }
+
+public ResultSet ConsultarAlarmasOnline(){
+	ResultSet rs=null;
+	con=Conectar();
+	Statement st;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT * FROM `eventos` WHERE `Checked`=false");
+			
+	
+	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("sin alarmas");
+	}
+	
+	
+	
+	return rs;
+	
+	
+}
+
 
 public void Desconectar(){
 	

@@ -8,16 +8,17 @@ public class btn_Radiobase extends JButton{
 	
 	public btn_Radiobase(int ID){
 		
-		this.ID=ID;	
+		this.ID=ID;
 		
 	}
-	
-	
-	
-	
-	public int ID(){
-			return ID;
-		
+
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 

@@ -9,11 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import BBDD.Conexion;
 import Hilos.ThreadGrafRadios;
 
 
 
+import Hilos.ThreadGrafRadiosIDs;
+import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
 
 import javax.swing.JLabel;
@@ -26,7 +29,9 @@ public class VentanaPrueba extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	JButton boton,btn_Iniciar;
-	btn_Radiobase prueba;
+
+	btn_Radiobase prueba;// es el boton que crea cada radiobase
+	
 	private JButton btn_CrearRadio;
 	JPanel panel;
 	Conexion con;
@@ -39,6 +44,7 @@ public class VentanaPrueba extends JFrame {
 	private JButton btn_Configuracion;
 	private JButton btn_Online;
 	ThreadGrafRadios HiloOnLine;
+	ThreadGrafRadiosIDs HiloOnLineID;
 	public VentanaPrueba() {
 		
 		getContentPane().setLayout(new BorderLayout());
@@ -63,13 +69,14 @@ public class VentanaPrueba extends JFrame {
 				// TODO Auto-generated method stub
 				if(btn_Iniciar.getText().toString().equals("Encender"))
 				{	btn_Iniciar.setText("Detener");
+			
+				HiloOnLineID=new ThreadGrafRadiosIDs(panel);
+				HiloOnLineID.start();
 				
-				HiloOnLine=new ThreadGrafRadios(panel);
-				HiloOnLine.start();
 				
 				}else{
 					btn_Iniciar.setText("Encender");
-					HiloOnLine.detener();	
+				
 				}
 			}
 		});
@@ -101,17 +108,6 @@ public class VentanaPrueba extends JFrame {
 		btn_Iniciar   =  new JButton("Encender");
 		panel_1.add(btn_Iniciar);
 		
-		prueba = new btn_Radiobase(1);
-		prueba.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lbl_ID.setText(String.valueOf(prueba.ID()));
-				
-			}
-		});
-		prueba.setText("BOTON DE PRUEBA");
-		panel_1.add(prueba);
-			
-		
 		panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
@@ -132,10 +128,15 @@ public class VentanaPrueba extends JFrame {
 		btn_Online.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			
+		     ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
+		     pintar.start();
+				
 			}
 		});
 		panel_3.add(btn_Online);
+		
+		
+		
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

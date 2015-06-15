@@ -63,7 +63,7 @@ boolean go=true;
 						
 						boolean pepe=ConsultaSiOnline(i);
 						if(pepe){
-							if(3>CantidadKA) {btn_Radio.setBackground(Color.ORANGE);}
+							if(2>CantidadKA) {btn_Radio.setBackground(Color.ORANGE);}
 							else{
 								btn_Radio.setBackground(Color.GREEN);
 							}
@@ -110,7 +110,8 @@ boolean go=true;
 		
  		private boolean ConsultaSiOnline(int IdRadio){
 		
- 				boolean OnLine=false;
+ 			int antes= (int) System.currentTimeMillis();
+			boolean OnLine=false;
 		
 			con=new Conexion();
 			ResultSet rs=con.ConsultarRadiosOnline();
@@ -121,7 +122,7 @@ boolean go=true;
 					RadioRS=rs.getInt("IdRadios");
 						if(IdRadio==RadioRS){
 							CantidadKA=rs.getInt("Cantidad");
-							System.out.println("CantidadKA:"+CantidadKA);
+							
 							OnLine=true;
 					}
 					
@@ -132,8 +133,8 @@ boolean go=true;
 				e.printStackTrace();
 			}
 			
-		//	int despues= (int) System.currentTimeMillis();
-		//	System.out.println("Tiempo:"+String.valueOf(despues-antes));
+			int despues= (int) System.currentTimeMillis();
+			System.out.println("Tiempo:"+String.valueOf(despues-antes));
 			return OnLine;
 			
 			
