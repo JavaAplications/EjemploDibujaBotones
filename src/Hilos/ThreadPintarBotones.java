@@ -46,13 +46,15 @@ public class ThreadPintarBotones extends Thread{
 		for(int i=0;i<lonVector;i++){
 			
         if(con.ConsultarHabilitado(i)){		
-        	int alarmado=ConsultarSiAlarmaChecked(i);	
         	
-        	System.out.println("ID:"+i+" alarmado: "+alarmado);
+        	
+        //	int alarmado=ConsultarSiAlarmaChecked(i);	
+        	
+        //	System.out.println("ID:"+i+" alarmado: "+alarmado);
 				
-			if(alarmado!=1){
-						vectorBotones[i].setBackground(Color.YELLOW);
-			}else{	
+		//	if(alarmado!=1){
+		//				vectorBotones[i].setBackground(Color.YELLOW);
+		//	}else{	
             	if(ConsultaSiOnline(i+1)){
 					if(2>CantidadKA) {vectorBotones[i].setBackground(Color.ORANGE);}
 					else{
@@ -61,7 +63,7 @@ public class ThreadPintarBotones extends Thread{
 					vectorBotones[i].setBackground(Color.RED);}
 		      	}
 			
-			}
+		//	}
 			else{
 				vectorBotones[i].setBackground(Color.GRAY);}
 		}
@@ -105,48 +107,6 @@ public class ThreadPintarBotones extends Thread{
 		
 	}
 	
-	
-	
-	private int ConsultarSiAlarmaChecked(int IdRadio){
-		int alarma=1;//1 es OK de ahi en mas es alarma!!!
-		ResultSet rs=con.ConsultarAlarmasOnline();
-		try {
-			while(rs.next()){
-			//	int IdEvento=rs.getInt("IdEvento");
-				int  rsAlarma=rs.getInt("IdAlarmas");
-				switch (rsAlarma) {
-				case 2:
-					alarma=2;
-					break;
-				case 3:
-					alarma=3;
-					break;
-				case 4:
-					alarma=4;
-					break;
-				default:alarma=1;
-					break;
-				}
-				
-				
-				int rsRadio=rs.getInt("IdRadios");
-				String nombre=con.ConsultarNombre(rsRadio);
-				System.out.println(nombre+"- Alarma: "+rsAlarma);
-				//con.InsertarChecked(IdEvento);
-				}
-				
-				
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		return alarma;
-	
-	}
 	
 	
 	
