@@ -133,9 +133,17 @@ public class VentanaPrueba extends JFrame {
 		});
 		panel_3.add(btn_Online);
 		
+		/*for(int i=0;i<10;i++){
+		ThreadGrafRadiosIDs.VectorBotones[i].addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+
+          System.out.println("se apreto el boton: i");
+				
+			}
+		});
 		
-		
-	
+		}*/
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}

@@ -1,6 +1,8 @@
 package Hilos;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -35,9 +37,10 @@ public class ThreadGrafRadiosIDs extends Thread{
 		
 		
 		int cantidad=con.CantidadRadiobases();
+		int i;
 		jPanel1.removeAll(); 
 	VectorBotones=new btn_Radiobase[cantidad];
-		for(int i=1;i<cantidad+1;i++){
+		for( i=1;i<cantidad+1;i++){
 			
 			
 			
@@ -52,6 +55,7 @@ public class ThreadGrafRadiosIDs extends Thread{
 		String Info=null;
 		try {
 			while(rs.next()){
+				
 				Info = rs.getString("NomRadio")+" | ";
 				Info= Info + "Contacto: "+rs.getString("ContacRadio")+" | ";
 				Info= Info + "Tel: "+rs.getString("TelRadio")+" | ";
@@ -65,7 +69,19 @@ public class ThreadGrafRadiosIDs extends Thread{
 		}
 		
 		btn_Radio.setToolTipText(Info);
+		
+		btn_Radio.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+
+				System.out.println("se apreto el boton: ");
+				
+			}
+		});
+		
 		VectorBotones[i-1]=btn_Radio;
+		
+		
 		
 		
 		
