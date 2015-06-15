@@ -11,10 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import BBDD.Conexion;
-import Hilos.ThreadGrafRadios;
-
-
-
 import Hilos.ThreadGrafRadiosIDs;
 import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
@@ -36,14 +32,14 @@ public class VentanaPrueba extends JFrame {
 	JPanel panel;
 	Conexion con;
 	
-	ThreadGrafRadios graficar;
+
 	private JPanel panel_1;
 	private JLabel lbl_ID;
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private JButton btn_Configuracion;
 	private JButton btn_Online;
-	ThreadGrafRadios HiloOnLine;
+	
 	ThreadGrafRadiosIDs HiloOnLineID;
 	public VentanaPrueba() {
 		
