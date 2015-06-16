@@ -3,19 +3,14 @@ package BBDD;
 import java.sql.*;
 import java.util.Vector;
 
-
 public class Conexion {
-	Connection con=null;
+Connection con=null;
+
 public Conexion() {
 		
 	}
 
-
-
 public  Connection Conectar(){
-	
-
-	
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
 		con= DriverManager.getConnection("jdbc:mysql://localhost/bdradiobases","root","");	
@@ -24,9 +19,7 @@ public  Connection Conectar(){
 		System.out.println("No se pudo conectar");
 	}
 	return con;
-	
 }
-	
 
 public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 
@@ -40,6 +33,7 @@ public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 		pst.setBoolean(1,IdOnLine);
 		
 		pst.execute();
+		
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -51,7 +45,7 @@ public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 	
 }
 
-public void InsertarChecked(int IdRadios){
+public void InsertarCheckedByIdRadio(int IdRadios){
 
 	
 	con=Conectar();
@@ -63,15 +57,30 @@ public void InsertarChecked(int IdRadios){
 		pst.setBoolean(1,true);
 		
 		pst.execute();
+		con.close();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 
+}
+
+public void InsertarCheckedByIdEvento(int IdEvento){
+	con=Conectar();
 	
+	PreparedStatement pst;
+	try {
+		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdEvento`='"+IdEvento+"'");
 	
+		pst.setBoolean(1,true);
+		
+		pst.execute();
 	
-	
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 }
 
 public ResultSet ConsultarRadiosOnline()
@@ -84,14 +93,7 @@ public ResultSet ConsultarRadiosOnline()
 		st=con.createStatement();
 		rs=st.executeQuery("SELECT `IdRadios`,COUNT(*) as 'Cantidad' FROM keepalive WHERE `TimeKA` > DATE_ADD(now(),INTERVAL -60 SECOND) GROUP BY `IdRadios`");
 	
-	/*	while(rs.next()){
 		
-			}
-		
-		*/
-		
-		
-	
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,6 +113,7 @@ con=Conectar();
 	try {
 		st=con.createStatement();
 		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `IdRadios`='"+IdRadiobase+"'");
+		
 	}catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -160,7 +163,6 @@ public boolean ConsultarHabilitado(int IdRadiobase)
 				
 					
 		}
-			
 	
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -200,8 +202,7 @@ public ResultSet ConsultarAlarmasOnline(){
 	Statement st;
 	try {
 		st=con.createStatement();
-		rs=st.executeQuery("SELECT * FROM `eventos` WHERE `Checked`=false");
-			
+		rs=st.executeQuery("SELECT * FROM `eventos` WHERE `Checked` =false" );
 	
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -209,13 +210,10 @@ public ResultSet ConsultarAlarmasOnline(){
 			System.out.println("sin alarmas");
 	}
 	
-	
-	
-	return rs;
+		return rs;
 	
 	
 }
-
 
 public void Desconectar(){
 	

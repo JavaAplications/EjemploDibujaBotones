@@ -43,16 +43,31 @@ public class ThreadPintarBotones extends Thread{
 		
 	while(go){	
 		
+	
+		
 		for(int i=0;i<lonVector;i++){
 			
         if(con.ConsultarHabilitado(i)){		
         	
        
             	if(ConsultaSiOnline(i+1)){
-					if(2>CantidadKA) {vectorBotones[i].setBackground(Color.ORANGE);}
-					else{
-						vectorBotones[i].setBackground(Color.GREEN);}
-				}else{
+            	
+            		if(	vectorBotones[i].isAlarmado()){
+            			
+            			vectorBotones[i].setBackground(Color.YELLOW);
+            			
+            		}else{
+            			if(2>CantidadKA) {vectorBotones[i].setBackground(Color.ORANGE);}
+    					
+    					else{
+    						vectorBotones[i].setBackground(Color.GREEN);}
+    				
+                	
+            		}
+            		
+				
+            	
+            	}else{
 					vectorBotones[i].setBackground(Color.RED);}
 		      	}
 			else{

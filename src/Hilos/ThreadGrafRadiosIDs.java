@@ -14,7 +14,7 @@ import Objetos.btn_Radiobase;
 
 public class ThreadGrafRadiosIDs extends Thread{
 	Conexion con;
-
+    
 	JPanel jPanel1;
 	int cantidad,cantidadOnline,IdRadio;
 	
@@ -33,6 +33,7 @@ public class ThreadGrafRadiosIDs extends Thread{
 	
 	public void run(){
 		con=new Conexion();
+		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
 		
 		
 		
@@ -46,11 +47,11 @@ public class ThreadGrafRadiosIDs extends Thread{
 			
 		    String nombre=con.ConsultarNombre(i);
 	      
-			btn_Radio=new btn_Radiobase(i);
+			btn_Radio=new btn_Radiobase();
 			
 		btn_Radio.setText("Id:"+i+" - "+nombre);
 		btn_Radio.setID(i);
-		
+		btn_Radio.setAlarmado(false);
 		ResultSet rs=con.ConsultarInfoRadiobase(i);
 		String Info=null;
 		try {
@@ -69,16 +70,15 @@ public class ThreadGrafRadiosIDs extends Thread{
 		}
 		
 		btn_Radio.setToolTipText(Info);
-		
 		btn_Radio.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 
-				System.out.println("se apreto el boton: ");
-				con.InsertarChecked(IdRadio);
+				btn_Radio.setAlarmado(false);
 				
 			}
 		});
+	
 		
 		VectorBotones[i-1]=btn_Radio;
 		
@@ -87,6 +87,8 @@ public class ThreadGrafRadiosIDs extends Thread{
 		
 		
 			jPanel1.add(btn_Radio);
+		
+			
 			btn_Radio.setVisible(true);
 			
 			
@@ -100,7 +102,7 @@ public class ThreadGrafRadiosIDs extends Thread{
 		
 		
 	
-		con.Desconectar();
+	con.Desconectar();
 		
 	}
 	

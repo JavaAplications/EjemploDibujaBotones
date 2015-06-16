@@ -10,7 +10,9 @@ import Objetos.btn_Radiobase;
 public class ThreadAlarmas extends Thread{
 	
 	Conexion con;
-	btn_Radiobase[] vectorBotones;
+	static public btn_Radiobase[] vectorBotones;
+	boolean go=true;
+	public static boolean alarmaRemota; 
 	public ThreadAlarmas(btn_Radiobase[] vectorBotones){
 		con=new Conexion();
 		this.vectorBotones=vectorBotones;
@@ -19,58 +21,84 @@ public class ThreadAlarmas extends Thread{
 		
 	}
 	
+	public void detener(){
+		
+		go=false;
+		
+		
+	}
+	
 	public void run(){
 		
 		System.out.println("check alarmas");
-		
-		
-		
-		
 		ConsultarSiAlarmaChecked(vectorBotones);
-		
-		
-		
 		
 	}
 	
-	private void AlarmaLimpiada(int IdEvento){
-		con.InsertarChecked(IdEvento);
-		
-		
-	}
+	
 
 	
 	private void ConsultarSiAlarmaChecked(btn_Radiobase[] vectorBotones){
+		
+		while(go)
+		{
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		
+		
+		
 		int alarma=1;//1 es OK de ahi en mas es alarma!!!
-		int c=0;
-		ResultSet rs=con.ConsultarAlarmasOnline();
+				
+		ResultSet rs=con.ConsultarAlarmasOnline();// devuelve toda slas alarmas
 		try {
 			while(rs.next()){
+				
+				
 				int rsRadio=rs.getInt("IdRadios")-1;
 				int  rsAlarma=rs.getInt("IdAlarmas");
+				int rsEvento=rs.getInt("IdEvento");
+				
 				switch (rsAlarma) {
 				case 2:
 					alarma=2;
-					vectorBotones[rsRadio].setBackground(Color.yellow);
+				
+					System.out.println(" 2 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
+					vectorBotones[rsRadio].setAlarmado(true);
+					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
+					System.out.println(" 2 pregunta despues"+vectorBotones[rsRadio].isAlarmado());
+					
 					break;
 				case 3:
 					alarma=3;
-					vectorBotones[rsRadio].setBackground(Color.yellow);
+					
+					System.out.println(" 3 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
+					
+					vectorBotones[rsRadio].setAlarmado(true);
+					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
+					System.out.println(" 3 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
+					
 					break;
 				case 4:
 					alarma=4;
-					vectorBotones[rsRadio].setBackground(Color.yellow);
+						vectorBotones[rsRadio].setAlarmado(true);
+					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
 					break;
 				default:alarma=1;
+				//vectorBotones[rsRadio].setAlarmado(false);
 					break;
 				}
 				
+				String nombre=con.ConsultarNombre(rsRadio+1);
+				System.out.println(nombre+" - Evento:"+rsEvento+"- Alarma: "+rsAlarma);
 				
+				con.InsertarCheckedByIdEvento(rsEvento);
 			
-				String nombre=con.ConsultarNombre(rsRadio);
-				System.out.println(nombre+"- Alarma: "+rsAlarma);
-				//con.InsertarChecked(IdEvento);
-			c++;	
 			}
 				
 				
@@ -85,5 +113,6 @@ public class ThreadAlarmas extends Thread{
 	
 	}
 	
-
+	};//while go
+	
 }

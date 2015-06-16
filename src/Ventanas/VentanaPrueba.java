@@ -33,13 +33,13 @@ public class VentanaPrueba extends JFrame {
 	JPanel panel;
 	Conexion con;
 	
-
+	ThreadAlarmas CheckAlarmas;
 	private JPanel panel_1;
 	private JLabel lbl_ID;
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private JButton btn_Configuracion;
-	private JButton btn_Online;
+	private JButton btn_Alarmas;
 	
 	ThreadGrafRadiosIDs HiloOnLineID;
 	public VentanaPrueba() {
@@ -69,14 +69,38 @@ public class VentanaPrueba extends JFrame {
 			
 				HiloOnLineID=new ThreadGrafRadiosIDs(panel);
 				HiloOnLineID.start();
+
+	//			CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
+		//		CheckAlarmas.start();
 				
 				
 				}else{
 					btn_Iniciar.setText("Encender");
-				
+			//		CheckAlarmas.detener();
 				}
 			}
 		});
+		
+		btn_CrearRadio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		btn_Alarmas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(btn_Alarmas.getText().toString().equals("Alarmas ON")){
+					btn_Alarmas.setText("Alarmas OFF");
+				CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
+				CheckAlarmas.start();}else{
+					btn_Alarmas.setText("Alarmas ON");
+					CheckAlarmas.detener();
+				}
+				
+			}
+		});
+		
 	}
 
 
@@ -112,26 +136,15 @@ public class VentanaPrueba extends JFrame {
 		getContentPane().add(panel_3, BorderLayout.WEST);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
 		btn_CrearRadio =  new JButton("CREAR RADIOBASE");
-		btn_CrearRadio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
+		
 		panel_3.add(btn_CrearRadio);
 		
 		btn_Configuracion = new JButton("CONFIGURACION");
 		panel_3.add(btn_Configuracion);
 		
-		btn_Online = new JButton("OnLine");
-		btn_Online.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				ThreadAlarmas CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
-				CheckAlarmas.start();
-				
-			}
-		});
-		panel_3.add(btn_Online);
+		btn_Alarmas = new JButton("Alarmas ON");
+	
+		panel_3.add(btn_Alarmas);
 		
 		/*for(int i=0;i<10;i++){
 		ThreadGrafRadiosIDs.VectorBotones[i].addActionListener(new ActionListener() {
