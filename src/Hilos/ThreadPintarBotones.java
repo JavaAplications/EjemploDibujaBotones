@@ -40,8 +40,8 @@ public class ThreadPintarBotones extends Thread{
 	public void  run(){
 		
 		int lonVector=vectorBotones.length;
-		  System.out.println("longitud :"+lonVector);
-		  int c=0;
+		//  System.out.println("longitud :"+lonVector);
+		 // int c=0;
 	while(go){	
 	   ResultSet rs= con.ConsultaHab();
 	    boolean consulta=false;
@@ -52,11 +52,11 @@ public class ThreadPintarBotones extends Thread{
 				while(rs.next()){
 				
 				RadioHabilitada=rs.getInt("IdRadios");	
-				System.out.println(" RadioHabilitada: "+RadioHabilitada);
-				System.out.println(" cont: "+cont);
+			//	System.out.println(" RadioHabilitada: "+RadioHabilitada);
+			//	System.out.println(" cont: "+cont);
 					if(cont+1==RadioHabilitada){
 						consulta=true;
-						System.out.println(" consulta: "+consulta);
+				//		System.out.println(" consulta: "+consulta);
 						
 						}	
 					}

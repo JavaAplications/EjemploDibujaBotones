@@ -36,5 +36,5 @@ public class btn_Radiobase extends JButton{
 		ID = iD;
 	}
 	
-
+	
 }
