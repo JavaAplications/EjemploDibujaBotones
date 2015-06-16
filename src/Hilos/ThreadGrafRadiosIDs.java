@@ -16,7 +16,7 @@ public class ThreadGrafRadiosIDs extends Thread{
 	Conexion con;
 
 	JPanel jPanel1;
-	int cantidad,cantidadOnline;
+	int cantidad,cantidadOnline,IdRadio;
 	
 	static public btn_Radiobase btn_Radio;
 	int CantidadKA;
@@ -37,12 +37,12 @@ public class ThreadGrafRadiosIDs extends Thread{
 		
 		
 		int cantidad=con.CantidadRadiobases();
-		int i;
+		
 		jPanel1.removeAll(); 
 	VectorBotones=new btn_Radiobase[cantidad];
-		for( i=1;i<cantidad+1;i++){
+		for( int i=1;i<cantidad+1;i++){
 			
-			
+			IdRadio=i;
 			
 		    String nombre=con.ConsultarNombre(i);
 	      
@@ -75,6 +75,7 @@ public class ThreadGrafRadiosIDs extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 
 				System.out.println("se apreto el boton: ");
+				con.InsertarChecked(IdRadio);
 				
 			}
 		});

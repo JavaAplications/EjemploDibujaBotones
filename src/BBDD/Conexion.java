@@ -51,14 +51,14 @@ public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 	
 }
 
-public void InsertarChecked(int IdEvento){
+public void InsertarChecked(int IdRadios){
 
 	
 	con=Conectar();
 	
 	PreparedStatement pst;
 	try {
-		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdEvento`='"+IdEvento+"'");
+		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdRadios`='"+IdRadios+"'");
 	
 		pst.setBoolean(1,true);
 		

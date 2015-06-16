@@ -47,14 +47,7 @@ public class ThreadPintarBotones extends Thread{
 			
         if(con.ConsultarHabilitado(i)){		
         	
-        	
-        //	int alarmado=ConsultarSiAlarmaChecked(i);	
-        	
-        //	System.out.println("ID:"+i+" alarmado: "+alarmado);
-				
-		//	if(alarmado!=1){
-		//				vectorBotones[i].setBackground(Color.YELLOW);
-		//	}else{	
+       
             	if(ConsultaSiOnline(i+1)){
 					if(2>CantidadKA) {vectorBotones[i].setBackground(Color.ORANGE);}
 					else{
@@ -62,8 +55,6 @@ public class ThreadPintarBotones extends Thread{
 				}else{
 					vectorBotones[i].setBackground(Color.RED);}
 		      	}
-			
-		//	}
 			else{
 				vectorBotones[i].setBackground(Color.GRAY);}
 		}
