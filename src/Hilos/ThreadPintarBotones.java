@@ -12,7 +12,7 @@ import Objetos.btn_Radiobase;
 public class ThreadPintarBotones extends Thread{
 	
 	Conexion con;
-
+	int RadioHabilitada;
 	JPanel jPanel1;
 	int cantidad,cantidadOnline;
 	ResultSet rs;
@@ -40,27 +40,49 @@ public class ThreadPintarBotones extends Thread{
 	public void  run(){
 		
 		int lonVector=vectorBotones.length;
-		
+		  System.out.println("longitud :"+lonVector);
+		  int c=0;
 	while(go){	
-		
+		c++;
+
 	
-		
-		for(int i=0;i<lonVector;i++){
-			
-        if(con.ConsultarHabilitado(i)){		
-        	
-       
-            	if(ConsultaSiOnline(i+1)){
+	    ResultSet rs= con.ConsultaHab();
+	    boolean consulta=false;
+	    System.out.println("c :"+c);
+		for(int i=1;i<lonVector;i++){
+			int cont=i;
+	//		System.out.println("longitud :"+lonVector);
+		/////////////////////////////////////////	
+			try {
+				while(rs.next()){
+				
+				RadioHabilitada=rs.getInt("IdRadios");	
+				System.out.println(" RadioHabilitada: "+RadioHabilitada);
+				System.out.println(" i: "+i);
+					if((cont)==RadioHabilitada){
+						consulta=true;
+						System.out.println(" consulta: "+consulta);
+						
+						}	
+					}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		////////////////////////////////////////////////////////////	
+			if(consulta){	
+        
+		  	if(ConsultaSiOnline(cont+1)){
             	
-            		if(	vectorBotones[i].isAlarmado()){
+            		if(	vectorBotones[cont].isAlarmado()){
             			
-            			vectorBotones[i].setBackground(Color.YELLOW);
+            			vectorBotones[cont].setBackground(Color.YELLOW);
             			
             		}else{
-            			if(2>CantidadKA) {vectorBotones[i].setBackground(Color.ORANGE);}
+            			if(2>CantidadKA) {vectorBotones[cont].setBackground(Color.ORANGE);}
     					
     					else{
-    						vectorBotones[i].setBackground(Color.GREEN);}
+    						vectorBotones[cont].setBackground(Color.GREEN);}
     				
                 	
             		}
@@ -68,10 +90,12 @@ public class ThreadPintarBotones extends Thread{
 				
             	
             	}else{
-					vectorBotones[i].setBackground(Color.RED);}
+					vectorBotones[cont].setBackground(Color.RED);}
 		      	}
 			else{
-				vectorBotones[i].setBackground(Color.GRAY);}
+				vectorBotones[cont].setBackground(Color.GRAY);}
+			
+			System.out.println("llego al  fuinal del FOR"+cont);
 		}
 	}
 		

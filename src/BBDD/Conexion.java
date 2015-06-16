@@ -16,7 +16,7 @@ public  Connection Conectar(){
 		con= DriverManager.getConnection("jdbc:mysql://localhost/bdradiobases","root","");	
 		
 	} catch (Exception e) {
-		System.out.println("No se pudo conectar");
+		System.out.println("No se pudo conectar a las BBDD");
 	}
 	return con;
 }
@@ -148,6 +148,31 @@ public String ConsultarNombre(int IdRadiobase)
 	
 	return NombreRadio;
 }
+
+public ResultSet ConsultaHab(){
+	ResultSet rs=null;
+con=Conectar();
+	
+    Statement st;
+	
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `Habilitacion`=true");
+		
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+              }
+
+	
+	
+	
+	
+	
+	
+	return rs;
+}
+
 
 public boolean ConsultarHabilitado(int IdRadiobase)
 {

@@ -102,8 +102,8 @@ public class ThreadGrafRadiosIDs extends Thread{
 		
 		
 	
-	con.Desconectar();
-		
+	//con.Desconectar();
+//		
 	}
 	
 	
