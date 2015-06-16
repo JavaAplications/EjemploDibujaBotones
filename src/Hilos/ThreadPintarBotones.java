@@ -43,23 +43,18 @@ public class ThreadPintarBotones extends Thread{
 		  System.out.println("longitud :"+lonVector);
 		  int c=0;
 	while(go){	
-		c++;
-
-	
-	    ResultSet rs= con.ConsultaHab();
+	   ResultSet rs= con.ConsultaHab();
 	    boolean consulta=false;
-	    System.out.println("c :"+c);
-		for(int i=1;i<lonVector;i++){
-			int cont=i;
-	//		System.out.println("longitud :"+lonVector);
-		/////////////////////////////////////////	
+	 	for(int cont=0;cont<lonVector;cont++){
+			
+	
 			try {
 				while(rs.next()){
 				
 				RadioHabilitada=rs.getInt("IdRadios");	
 				System.out.println(" RadioHabilitada: "+RadioHabilitada);
-				System.out.println(" i: "+i);
-					if((cont)==RadioHabilitada){
+				System.out.println(" cont: "+cont);
+					if(cont+1==RadioHabilitada){
 						consulta=true;
 						System.out.println(" consulta: "+consulta);
 						
@@ -70,32 +65,31 @@ public class ThreadPintarBotones extends Thread{
 				e.printStackTrace();
 			}
 		////////////////////////////////////////////////////////////	
-			if(consulta){	
-        
-		  	if(ConsultaSiOnline(cont+1)){
+			if(consulta)
+			{	
+          	if(ConsultaSiOnline(cont+1))
+		  		{
             	
-            		if(	vectorBotones[cont].isAlarmado()){
-            			
-            			vectorBotones[cont].setBackground(Color.YELLOW);
-            			
+            		if(	vectorBotones[cont].isAlarmado()){            			
             		}else{
-            			if(2>CantidadKA) {vectorBotones[cont].setBackground(Color.ORANGE);}
-    					
-    					else{
-    						vectorBotones[cont].setBackground(Color.GREEN);}
-    				
-                	
+            			if(2>CantidadKA) {vectorBotones[cont].setBackground(Color.ORANGE);
+            				}else{
+    						vectorBotones[cont].setBackground(Color.GREEN);
+    						
+    						}
+            			vectorBotones[cont].setForeground(Color.BLACK);
             		}
-            		
-				
-            	
-            	}else{
-					vectorBotones[cont].setBackground(Color.RED);}
+             	}else{
+					vectorBotones[cont].setBackground(Color.RED);
+					vectorBotones[cont].setForeground(Color.WHITE);
+					}
 		      	}
 			else{
-				vectorBotones[cont].setBackground(Color.GRAY);}
+				vectorBotones[cont].setBackground(Color.GRAY);
+				vectorBotones[cont].setForeground(Color.WHITE);
+				}
 			
-			System.out.println("llego al  fuinal del FOR"+cont);
+			//System.out.println("llego al  fuinal del FOR"+cont);
 		}
 	}
 		

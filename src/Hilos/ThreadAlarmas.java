@@ -43,7 +43,7 @@ public class ThreadAlarmas extends Thread{
 		while(go)
 		{
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -67,27 +67,22 @@ public class ThreadAlarmas extends Thread{
 				switch (rsAlarma) {
 				case 2:
 					alarma=2;
-				
-					System.out.println(" 2 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
 					vectorBotones[rsRadio].setAlarmado(true);
 					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
-					System.out.println(" 2 pregunta despues"+vectorBotones[rsRadio].isAlarmado());
-					
+					vectorBotones[rsRadio].setBackground(Color.YELLOW);
 					break;
 				case 3:
 					alarma=3;
-					
-					System.out.println(" 3 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
-					
 					vectorBotones[rsRadio].setAlarmado(true);
 					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
-					System.out.println(" 3 pregunta antes"+vectorBotones[rsRadio].isAlarmado());
-					
+					vectorBotones[rsRadio].setBackground(Color.YELLOW);
 					break;
 				case 4:
 					alarma=4;
 						vectorBotones[rsRadio].setAlarmado(true);
 					ThreadGrafRadiosIDs.VectorBotones[rsRadio].setAlarmado(true);
+					vectorBotones[rsRadio].setBackground(Color.YELLOW);
+					
 					break;
 				default:alarma=1;
 				//vectorBotones[rsRadio].setAlarmado(false);
