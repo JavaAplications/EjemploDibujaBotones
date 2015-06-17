@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,11 +26,11 @@ public class VentanaPrueba extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	JButton boton,btn_Iniciar;
+	JButton btn_InsertarRadiosOnline,btn_Iniciar;
 
 	btn_Radiobase prueba;// es el boton que crea cada radiobase
 	
-	private JButton btn_CrearRadio;
+	private JButton btn_VaciarTablaOnline;
 	JPanel panel;
 	Conexion con;
 	
@@ -66,23 +67,23 @@ public class VentanaPrueba extends JFrame {
 				// TODO Auto-generated method stub
 				if(btn_Iniciar.getText().toString().equals("Encender"))
 				{	btn_Iniciar.setText("Detener");
+				con=new  Conexion();
+			 int cantidad=con.CantidadRadiobases();
 			
-				HiloOnLineID=new ThreadGrafRadiosIDs(panel);
+			 		con.Desconectar();
+				HiloOnLineID=new ThreadGrafRadiosIDs(panel,cantidad);
 				HiloOnLineID.start();
-
-	//			CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
-		//		CheckAlarmas.start();
-				
-				
-				}else{
+					}else{
 					btn_Iniciar.setText("Encender");
-			//		CheckAlarmas.detener();
 				}
 			}
 		});
 		
-		btn_CrearRadio.addActionListener(new ActionListener() {
+		btn_VaciarTablaOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				con=new  Conexion();
+				con.vaciarRadiosOnlines();
+				
 				
 			}
 		});
@@ -101,7 +102,13 @@ public class VentanaPrueba extends JFrame {
 			}
 		});
 		
-		
+		btn_InsertarRadiosOnline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				con=new  Conexion();
+				con.InsertarRadiosOnline();
+				
+			}
+		});
 		
 	}
 
@@ -109,8 +116,9 @@ public class VentanaPrueba extends JFrame {
 
 
 	private void CrearComponentes(){
-		boton =  new JButton("derecha");
-		getContentPane().add(boton, BorderLayout.EAST);
+		btn_InsertarRadiosOnline =  new JButton("Insertar Radios Online");
+	
+		getContentPane().add(btn_InsertarRadiosOnline, BorderLayout.EAST);
 		
 		panel=new JPanel();
 		ScrollPane barras=new ScrollPane();
@@ -137,9 +145,9 @@ public class VentanaPrueba extends JFrame {
 		panel_3 = new JPanel();
 		getContentPane().add(panel_3, BorderLayout.WEST);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
-		btn_CrearRadio =  new JButton("CREAR RADIOBASE");
+		btn_VaciarTablaOnline =  new JButton("Vaciar Tabla Online");
 		
-		panel_3.add(btn_CrearRadio);
+		panel_3.add(btn_VaciarTablaOnline);
 		
 		btn_Configuracion = new JButton("CONFIGURACION");
 		panel_3.add(btn_Configuracion);
@@ -148,17 +156,7 @@ public class VentanaPrueba extends JFrame {
 	
 		panel_3.add(btn_Alarmas);
 		
-		/*for(int i=0;i<10;i++){
-		ThreadGrafRadiosIDs.VectorBotones[i].addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-
-          System.out.println("se apreto el boton: i");
-				
-			}
-		});
-		
-		}*/
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}

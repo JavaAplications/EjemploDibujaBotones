@@ -22,10 +22,9 @@ public class ThreadPintarBotones extends Thread{
 	btn_Radiobase[] vectorBotones;
 	
 	public ThreadPintarBotones(btn_Radiobase[] vectorBotones){
-		
-		this.vectorBotones=vectorBotones;
 		con=new Conexion();
-		
+		this.vectorBotones=vectorBotones;
+	
 	}
 	
 	
@@ -40,10 +39,15 @@ public class ThreadPintarBotones extends Thread{
 	public void  run(){
 		
 		int lonVector=vectorBotones.length;
-		//  System.out.println("longitud :"+lonVector);
-		 // int c=0;
+		
 	while(go){	
+		
+		
+		
+		
+		
 	   ResultSet rs= con.ConsultaHab();
+	  
 	    boolean consulta=false;
 	 	for(int cont=0;cont<lonVector;cont++){
 			
@@ -52,14 +56,11 @@ public class ThreadPintarBotones extends Thread{
 				while(rs.next()){
 				
 				RadioHabilitada=rs.getInt("IdRadios");	
-			//	System.out.println(" RadioHabilitada: "+RadioHabilitada);
-			//	System.out.println(" cont: "+cont);
-					if(cont+1==RadioHabilitada){
+				if(cont+1==RadioHabilitada){
 						consulta=true;
-				//		System.out.println(" consulta: "+consulta);
-						
 						}	
 					}
+				//rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -67,6 +68,7 @@ public class ThreadPintarBotones extends Thread{
 		////////////////////////////////////////////////////////////	
 			if(consulta)
 			{	
+			
           	if(ConsultaSiOnline(cont+1))
 		  		{
             	
@@ -88,10 +90,10 @@ public class ThreadPintarBotones extends Thread{
 				vectorBotones[cont].setBackground(Color.GRAY);
 				vectorBotones[cont].setForeground(Color.WHITE);
 				}
-			
-			//System.out.println("llego al  fuinal del FOR"+cont);
+		
 		}
-	}
+	 	
+	} 
 		
 	}
 	
@@ -102,8 +104,9 @@ public class ThreadPintarBotones extends Thread{
 	
 			
 		boolean OnLine=false;
-	
 		
+		 con=new Conexion();
+	
 		ResultSet rs=con.ConsultarRadiosOnline();
 		
 		int RadioRS;
@@ -118,10 +121,11 @@ public class ThreadPintarBotones extends Thread{
 				
 				
 			}
-		} catch (SQLException e) {
+	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 		return OnLine;
@@ -132,8 +136,9 @@ public class ThreadPintarBotones extends Thread{
 	}
 	
 	
+	}
 	
 	
 	
 
-}
+

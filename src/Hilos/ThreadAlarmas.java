@@ -14,9 +14,9 @@ public class ThreadAlarmas extends Thread{
 	boolean go=true;
 	public static boolean alarmaRemota; 
 	public ThreadAlarmas(btn_Radiobase[] vectorBotones){
-		con=new Conexion();
+	
 		this.vectorBotones=vectorBotones;
-		
+		con=new Conexion();
 		
 		
 	}
@@ -41,18 +41,8 @@ public class ThreadAlarmas extends Thread{
 	private void ConsultarSiAlarmaChecked(btn_Radiobase[] vectorBotones){
 		
 		while(go)
-		{
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		{	
 			
-			
-		
-		
-		
 		int alarma=1;//1 es OK de ahi en mas es alarma!!!
 				
 		ResultSet rs=con.ConsultarAlarmasOnline();// devuelve toda slas alarmas
@@ -92,11 +82,12 @@ public class ThreadAlarmas extends Thread{
 				String nombre=con.ConsultarNombre(rsRadio+1);
 				System.out.println(nombre+" - Evento:"+rsEvento+"- Alarma: "+rsAlarma);
 				
-				con.InsertarCheckedByIdEvento(rsEvento);
+			//	con.InsertarCheckedByIdEvento(rsEvento);
 			
 			}
 				
-				
+			rs.close();
+			//con.Desconectar();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

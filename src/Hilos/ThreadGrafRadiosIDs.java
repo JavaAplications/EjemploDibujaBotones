@@ -26,25 +26,26 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	static public btn_Radiobase btn_Radio;
 	int CantidadKA;
 	public static btn_Radiobase[] VectorBotones;
+	int CantidadRadiobases;
 	
 	
-	public ThreadGrafRadiosIDs(JPanel jPanel1){
+	public ThreadGrafRadiosIDs(JPanel jPanel1,int CantidadRadiobases){
 		
 		this.jPanel1=jPanel1;
+		this.CantidadRadiobases=CantidadRadiobases;
 		
 		
 	}
 	
 	
 	public void run(){
+		jPanel1.removeAll(); 
 		con=new Conexion();
 		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
+				
+		int cantidad=CantidadRadiobases;
 		
 		
-		
-		int cantidad=con.CantidadRadiobases();
-		
-		jPanel1.removeAll(); 
 	VectorBotones=new btn_Radiobase[cantidad];
 	
 		for( int i=1;i<cantidad+1;i++){
@@ -70,6 +71,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 				Info= Info + "Prov: "+rs.getString("ProvRadio");
 				
 			}
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,9 +85,6 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 				if((JButton)arg0.getSource()==btn_Radio){
 					
 					System.out.println(btn_Radio.getText().toString());
-					
-					
-					
 				};
 			}
 			
@@ -94,9 +93,6 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		btn_Radio.addActionListener(this);
 		
 		VectorBotones[i-1]=btn_Radio;
-		
-		
-		
 		
 		
 			jPanel1.add(btn_Radio);
@@ -115,22 +111,20 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		
 		
 	
-	//con.Desconectar();
+	con.Desconectar();
 //		
 	}
 
 
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println(arg0.getActionCommand());	
-		//Ventana_Radiobase ventana=new Ventana_Radiobase();
-		//ventana.setTitle(arg0.getActionCommand());
-		//ventana.setVisible(true);
+		
 		int Id=arg0.getActionCommand().indexOf(" ");
 		String nuero=arg0.getActionCommand().substring(3, Id);
 		int IdRadioBase=Integer.parseInt(nuero);
 		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
 		VectorBotones[IdRadioBase-1].setBackground(Color.GREEN);
-		JOptionPane.showMessageDialog(null, "ALARMA CARAJO", VectorBotones[IdRadioBase-1].getToolTipText(), JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "ALARMA CARAJO", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 	
