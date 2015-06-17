@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -14,7 +17,7 @@ import BBDD.Conexion;
 import Objetos.btn_Radiobase;
 import Ventanas.Ventana_Radiobase;
 
-public class ThreadGrafRadiosIDs extends Thread{
+public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	Conexion con;
     
 	JPanel jPanel1;
@@ -73,7 +76,22 @@ public class ThreadGrafRadiosIDs extends Thread{
 		}
 		
 		btn_Radio.setToolTipText(Info);
+		btn_Radio.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if((JButton)arg0.getSource()==btn_Radio){
+					
+					System.out.println(btn_Radio.getText().toString());
+					
+					
+					
+				};
+			}
+			
+		});
 	
+		btn_Radio.addActionListener(this);
 		
 		VectorBotones[i-1]=btn_Radio;
 		
@@ -99,6 +117,21 @@ public class ThreadGrafRadiosIDs extends Thread{
 	
 	//con.Desconectar();
 //		
+	}
+
+
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println(arg0.getActionCommand());	
+		//Ventana_Radiobase ventana=new Ventana_Radiobase();
+		//ventana.setTitle(arg0.getActionCommand());
+		//ventana.setVisible(true);
+		int Id=arg0.getActionCommand().indexOf(" ");
+		String nuero=arg0.getActionCommand().substring(3, Id);
+		int IdRadioBase=Integer.parseInt(nuero);
+		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
+		VectorBotones[IdRadioBase-1].setBackground(Color.GREEN);
+		JOptionPane.showMessageDialog(null, "ALARMA CARAJO", VectorBotones[IdRadioBase-1].getToolTipText(), JOptionPane.ERROR_MESSAGE);
+		
 	}
 	
 	

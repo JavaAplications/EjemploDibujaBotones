@@ -57,7 +57,7 @@ public void InsertarCheckedByIdRadio(int IdRadios){
 		pst.setBoolean(1,true);
 		
 		pst.execute();
-		con.close();
+		//con.close();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -243,12 +243,7 @@ public ResultSet ConsultarAlarmasOnline(){
 public void Desconectar(){
 	
 	
-	try {
-		con.close();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+
 }
 
 
