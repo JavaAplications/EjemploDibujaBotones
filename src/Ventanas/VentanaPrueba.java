@@ -30,7 +30,7 @@ public class VentanaPrueba extends JFrame {
 
 	btn_Radiobase prueba;// es el boton que crea cada radiobase
 	
-	private JButton btn_VaciarTablaOnline;
+	private JButton btn_PintarRadOnline;
 	JPanel panel;
 	Conexion con;
 	
@@ -67,22 +67,17 @@ public class VentanaPrueba extends JFrame {
 				// TODO Auto-generated method stub
 				if(btn_Iniciar.getText().toString().equals("Encender"))
 				{	btn_Iniciar.setText("Detener");
-				con=new  Conexion();
-			 int cantidad=con.CantidadRadiobases();
 			
-			 		con.Desconectar();
-				HiloOnLineID=new ThreadGrafRadiosIDs(panel,cantidad);
-				HiloOnLineID.start();
 					}else{
 					btn_Iniciar.setText("Encender");
 				}
 			}
 		});
 		
-		btn_VaciarTablaOnline.addActionListener(new ActionListener() {
+		btn_PintarRadOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				con=new  Conexion();
-				con.vaciarRadiosOnlines();
+				ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
+					pintar.start();
 				
 				
 			}
@@ -104,8 +99,7 @@ public class VentanaPrueba extends JFrame {
 		
 		btn_InsertarRadiosOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				con=new  Conexion();
-				con.InsertarRadiosOnline();
+			   
 				
 			}
 		});
@@ -145,9 +139,9 @@ public class VentanaPrueba extends JFrame {
 		panel_3 = new JPanel();
 		getContentPane().add(panel_3, BorderLayout.WEST);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
-		btn_VaciarTablaOnline =  new JButton("Vaciar Tabla Online");
+		btn_PintarRadOnline =  new JButton("Pintar Online");
 		
-		panel_3.add(btn_VaciarTablaOnline);
+		panel_3.add(btn_PintarRadOnline);
 		
 		btn_Configuracion = new JButton("CONFIGURACION");
 		panel_3.add(btn_Configuracion);
@@ -155,6 +149,12 @@ public class VentanaPrueba extends JFrame {
 		btn_Alarmas = new JButton("Alarmas ON");
 	
 		panel_3.add(btn_Alarmas);
+		
+		/////////////////////////// dibujar todo
+		
+		 		HiloOnLineID=new ThreadGrafRadiosIDs(panel);
+				HiloOnLineID.start();
+		
 		
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

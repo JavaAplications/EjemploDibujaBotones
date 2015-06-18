@@ -20,7 +20,7 @@ public  Connection Conectar(String nombre){
 	}
 	return con;
 }
-
+/*
 public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 
 	
@@ -46,6 +46,7 @@ public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 	
 	
 }
+*/
 
 public ResultSet RadiobasesConectadas(){
 	
@@ -105,8 +106,8 @@ con=Conectar("ConsultarRadiosOnline");
 	ResultSet rs = null;
 	try {
 		st=con.createStatement();
-		rs=st.executeQuery("SELECT * FROM `onlineradiobases`");
-		
+		rs=st.executeQuery("SELECT `IdRadios`,COUNT(*) as 'Cantidad' FROM keepalive WHERE `TimeKA` > DATE_ADD(now(),INTERVAL -60 SECOND) GROUP BY `IdRadios`");
+		//con.close();
 		
 	}catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -116,7 +117,7 @@ con=Conectar("ConsultarRadiosOnline");
 	return rs;
 }
 
-
+/*
 public void InsertarRadiosOnline(){
 	
    con=Conectar("ConsultarRadiosOnline");
@@ -165,8 +166,9 @@ public void InsertarRadiosOnline(){
 			e.printStackTrace();
 	}
 	
-}
+}*/
 
+/*
 public boolean vaciarRadiosOnlines(){
 	
 	con=Conectar("vaciarRadiosOnlines");
@@ -188,6 +190,7 @@ public boolean vaciarRadiosOnlines(){
 		
 		return true;
 }
+*/
 
 public ResultSet ConsultarInfoRadiobase(int IdRadiobase){
 
@@ -198,7 +201,7 @@ con=Conectar("ConsultarInfoRadiobase");
 	try {
 		st=con.createStatement();
 		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `IdRadios`='"+IdRadiobase+"'");
-		
+	//	con.close();
 	}catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -265,7 +268,7 @@ public boolean ConsultarHabilitado(int IdRadiobase)
 				
 					
 		}
-		
+
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

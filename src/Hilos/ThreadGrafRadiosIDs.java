@@ -29,10 +29,10 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	int CantidadRadiobases;
 	
 	
-	public ThreadGrafRadiosIDs(JPanel jPanel1,int CantidadRadiobases){
+	public ThreadGrafRadiosIDs(JPanel jPanel1){
 		
 		this.jPanel1=jPanel1;
-		this.CantidadRadiobases=CantidadRadiobases;
+	//	this.CantidadRadiobases=CantidadRadiobases;
 		
 		
 	}
@@ -41,8 +41,9 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	public void run(){
 		jPanel1.removeAll(); 
 		con=new Conexion();
+		
 		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
-				
+		CantidadRadiobases=con.CantidadRadiobases();	
 		int cantidad=CantidadRadiobases;
 		
 		
@@ -71,7 +72,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 				Info= Info + "Prov: "+rs.getString("ProvRadio");
 				
 			}
-			rs.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,13 +107,9 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		
 	
 		SwingUtilities.updateComponentTreeUI(jPanel1);
-		ThreadPintarBotones pintar=new ThreadPintarBotones(VectorBotones);
-		pintar.start();
-		
-		
-	
+	//	ThreadPintarBotones pintar=new ThreadPintarBotones(VectorBotones);
+	//	pintar.start();
 	con.Desconectar();
-//		
 	}
 
 
@@ -123,7 +120,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		String nuero=arg0.getActionCommand().substring(3, Id);
 		int IdRadioBase=Integer.parseInt(nuero);
 		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
-		VectorBotones[IdRadioBase-1].setBackground(Color.GREEN);
+		VectorBotones[IdRadioBase-1].setBackground(Color.LIGHT_GRAY);
 		JOptionPane.showMessageDialog(null, "ALARMA CARAJO", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
 		
 	}
