@@ -12,7 +12,7 @@ import Objetos.btn_Radiobase;
 public class ThreadPintarBotones extends Thread{
 	
 	Conexion con;
-	int RadioHabilitada;
+	
 	JPanel jPanel1;
 	int cantidad,cantidadOnline;
 	ResultSet rs;
@@ -42,33 +42,27 @@ public class ThreadPintarBotones extends Thread{
 		
 	while(go){	
 		
+		con=new Conexion();
 		
+		ResultSet rs=con.ConsultarRadiosOnline();
+		try {
+			while(rs.next()){
+				int RadioHabilitada=rs.getInt("IdRadios");	
+				vectorBotones[RadioHabilitada-1].setBackground(Color.GREEN);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		con.Desconectar();
 		
-		
-	   ResultSet rs= con.ConsultaHab();
+	 //  ResultSet rs= con.ConsultaHab();
 	  
 	    boolean consulta=false;
-	 	for(int cont=0;cont<lonVector;cont++){
+	/* 	for(int cont=0;cont<lonVector;cont++){
 			
-	
-			try {
-				while(rs.next()){
-				
-				RadioHabilitada=rs.getInt("IdRadios");	
-				if(cont+1==RadioHabilitada){
-						consulta=true;
-						}	
-					}
-				//rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		////////////////////////////////////////////////////////////	
-			if(consulta)
-			{	
-			
+	 
           	if(ConsultaSiOnline(cont+1))
 		  		{
             	
@@ -85,13 +79,8 @@ public class ThreadPintarBotones extends Thread{
 					vectorBotones[cont].setBackground(Color.RED);
 					vectorBotones[cont].setForeground(Color.WHITE);
 					}
-		      	}
-			else{
-				vectorBotones[cont].setBackground(Color.GRAY);
-				vectorBotones[cont].setForeground(Color.WHITE);
-				}
-		
-		}
+		    
+		}*/
 	 	
 	} 
 		
