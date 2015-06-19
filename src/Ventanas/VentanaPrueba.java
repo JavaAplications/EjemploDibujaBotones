@@ -16,6 +16,7 @@ import Hilos.ThreadAlarmas;
 import Hilos.ThreadGrafRadiosIDs;
 import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
+import Timers.TemporizadorPintar;
 
 import javax.swing.JLabel;
 
@@ -26,6 +27,7 @@ public class VentanaPrueba extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	TemporizadorPintar timerPintar;
 	JButton btn_InsertarRadiosOnline,btn_Iniciar;
 
 	btn_Radiobase prueba;// es el boton que crea cada radiobase
@@ -67,17 +69,19 @@ public class VentanaPrueba extends JFrame {
 				// TODO Auto-generated method stub
 				if(btn_Iniciar.getText().toString().equals("Encender"))
 				{	btn_Iniciar.setText("Detener");
-			
+				timerPintar= new  TemporizadorPintar();
+				timerPintar.start();
 					}else{
 					btn_Iniciar.setText("Encender");
+					timerPintar.Detener();
 				}
 			}
 		});
 		
 		btn_PintarRadOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
-					pintar.start();
+			//	ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
+				//	pintar.start();
 				
 				
 			}

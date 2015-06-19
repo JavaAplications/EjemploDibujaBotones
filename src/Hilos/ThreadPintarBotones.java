@@ -37,92 +37,61 @@ public class ThreadPintarBotones extends Thread{
 	}
 	
 	public void  run(){
-		
+		long antes =System.currentTimeMillis();
 		int lonVector=vectorBotones.length;
 		
-	while(go){	
-		
+
+
+
+	
 		con=new Conexion();
-		
-		ResultSet rs=con.ConsultarRadiosOnline();
-		try {
-			while(rs.next()){
-				int RadioHabilitada=rs.getInt("IdRadios");	
-				vectorBotones[RadioHabilitada-1].setBackground(Color.GREEN);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		con.Desconectar();
-		
-	 //  ResultSet rs= con.ConsultaHab();
-	  
-	    boolean consulta=false;
-	/* 	for(int cont=0;cont<lonVector;cont++){
 			
-	 
-          	if(ConsultaSiOnline(cont+1))
-		  		{
-            	
-            		if(	vectorBotones[cont].isAlarmado()){            			
-            		}else{
-            			if(2>CantidadKA) {vectorBotones[cont].setBackground(Color.ORANGE);
-            				}else{
-    						vectorBotones[cont].setBackground(Color.GREEN);
-    						
-    						}
-            			vectorBotones[cont].setForeground(Color.BLACK);
-            		}
-             	}else{
-					vectorBotones[cont].setBackground(Color.RED);
-					vectorBotones[cont].setForeground(Color.WHITE);
+		ResultSet rs=con.ConsultarRadiosOnline();
+
+		ResultSet rsHAB=con.ConsultaHab();
+		boolean control=false;
+	
+		try {
+			while(rsHAB.next()){
+				int RadioHAB=rsHAB.getInt("IdRadios");	
+			while(rs.next()){
+				int RadioOnLine=rs.getInt("IdRadios");	
+				
+					
+					if(RadioHAB==RadioOnLine){	
+						control=true;			
 					}
-		    
-		}*/
-	 	
-	} 
-		
-	}
-	
-	
-	
-	
-	private boolean ConsultaSiOnline(int IdRadio){
-	
-			
-		boolean OnLine=false;
-		
-		 con=new Conexion();
-	
-		ResultSet rs=con.ConsultarRadiosOnline();
-		
-		int RadioRS;
-		try {
-			while(rs.next()){
-				RadioRS=rs.getInt("IdRadios");
-					if(IdRadio==RadioRS){
-						CantidadKA=rs.getInt("Cantidad");
+					
+					}
+			rs.beforeFirst();
 						
-						OnLine=true;
+			if(control){
+				vectorBotones[RadioHAB-1].setBackground(Color.GREEN);
+				control=false;	
+			}else{vectorBotones[RadioHAB-1].setBackground(Color.RED);
+			
 				}
-				
-				
-			}
-	} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+			
+		}
+			
+		} catch (SQLException e) {
+		
 			e.printStackTrace();
 		}
+	
+	
+	
 		
-		
-		
-		return OnLine;
-		
+	   con.Desconectar();
 		
 		
 		
 	}
+	
+	
+	
+	
 	
 	
 	}

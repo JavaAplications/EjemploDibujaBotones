@@ -7,15 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import BBDD.Conexion;
 import Objetos.btn_Radiobase;
-import Ventanas.Ventana_Radiobase;
+
 
 public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	Conexion con;
@@ -45,6 +43,9 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
 		CantidadRadiobases=con.CantidadRadiobases();	
 		int cantidad=CantidadRadiobases;
+		
+	
+		
 		
 		
 	VectorBotones=new btn_Radiobase[cantidad];
@@ -105,10 +106,27 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		}
 		
 		
+		ResultSet rs=con.ConsultaDeshab();
+		
+		   try {
+				while(rs.next()){
+					int RadioDesHabilitada=rs.getInt("IdRadios");	
+					System.out.println(" RadioDesHabilitada: "+RadioDesHabilitada);
+					VectorBotones[RadioDesHabilitada-1].setEnabled(false);
+					
+				
+				}
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	
 		SwingUtilities.updateComponentTreeUI(jPanel1);
-	//	ThreadPintarBotones pintar=new ThreadPintarBotones(VectorBotones);
-	//	pintar.start();
+	
+		
+		
 	con.Desconectar();
 	}
 
@@ -120,8 +138,8 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		String nuero=arg0.getActionCommand().substring(3, Id);
 		int IdRadioBase=Integer.parseInt(nuero);
 		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
-		VectorBotones[IdRadioBase-1].setBackground(Color.LIGHT_GRAY);
-		JOptionPane.showMessageDialog(null, "ALARMA CARAJO", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
+		
+		JOptionPane.showMessageDialog(null, "HAY UNA ALARMA", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 	

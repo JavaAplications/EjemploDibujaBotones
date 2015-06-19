@@ -106,8 +106,28 @@ con=Conectar("ConsultarRadiosOnline");
 	ResultSet rs = null;
 	try {
 		st=con.createStatement();
-		rs=st.executeQuery("SELECT `IdRadios`,COUNT(*) as 'Cantidad' FROM keepalive WHERE `TimeKA` > DATE_ADD(now(),INTERVAL -60 SECOND) GROUP BY `IdRadios`");
-		//con.close();
+		rs=st.executeQuery("SELECT keepalive.IdRadios,COUNT(*) as 'Cantidad' FROM keepalive LEFT JOIN radiobases ON keepalive.IdRadios=radiobases.IdRadios WHERE keepalive.TimeKA > DATE_ADD(now(),INTERVAL -60 SECOND) AND(radiobases.Habilitacion) GROUP BY keepalive.IdRadios ");
+	
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+              }
+	
+	return rs;
+}
+
+
+
+public ResultSet ConsultarRadiosOffline(){
+
+con=Conectar("ConsultarRadiosOffline");
+	
+    Statement st;
+	ResultSet rs = null;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT keepalive.IdRadios,COUNT(*) as 'Cantidad' FROM keepalive LEFT JOIN radiobases ON keepalive.IdRadios=radiobases.IdRadios WHERE keepalive.TimeKA < DATE_ADD(now(),INTERVAL -60 SECOND) AND(radiobases.Habilitacion) GROUP BY keepalive.IdRadios ");
+		
 		
 	}catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -117,80 +137,8 @@ con=Conectar("ConsultarRadiosOnline");
 	return rs;
 }
 
-/*
-public void InsertarRadiosOnline(){
-	
-   con=Conectar("ConsultarRadiosOnline");
-   String ComandoSQL="(?,?)";
-   String SQLFINAL=null;
-    Statement st;
-	ResultSet rs=null;
-	PreparedStatement pst;
-	try {
-		st=con.createStatement();
-		rs=st.executeQuery("SELECT `IdRadios`,COUNT(*) as 'Cantidad' FROM keepalive WHERE `TimeKA` > DATE_ADD(now(),INTERVAL -60 SECOND) GROUP BY `IdRadios`");
-		rs.last();
-		
-		int longitudRS=rs.getRow();
-		rs.beforeFirst();
-		System.out.println("longitudRS:"+longitudRS);
-		int c=0;
-		
-		
-			 while(rs.next()){
-					SQLFINAL=ComandoSQL;
-						ComandoSQL=ComandoSQL+",(?,?)";
-					}
-			    
-			 //   System.out.println("INSERT INTO `onlineradiobases` (`IdRadios`, `Cantidad`) VALUES "+SQLFINAL);
-			    
-				pst = con.prepareStatement("INSERT INTO `onlineradiobases` (`IdRadios`, `Cantidad`) VALUES "+SQLFINAL);
-				rs.beforeFirst();
-				c=1;
-			 
-				while(rs.next()){
 
-				   int Radio=rs.getInt("IdRadios");
-					int cantidad=rs.getInt("Cantidad");
-				//	System.out.println(c+" "+Radio+" "+cantidad);
-					pst.setInt(c,Radio);
-					pst.setInt(c+1,cantidad);
-					c=c+2;// se suma dos porque es de a dos datos que se  cargan
-				}
-				
-				pst.execute();
-				//con.close();
-			
-	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	}
-	
-}*/
 
-/*
-public boolean vaciarRadiosOnlines(){
-	
-	con=Conectar("vaciarRadiosOnlines");
-	String comando="TRUNCATE `onlineradiobases`";
-	 
-	 PreparedStatement pst;
-	 
-		try {
-			//st=con.createStatement();
-			pst = con.prepareStatement(comando);
-			pst.execute();
-		//	con.close();
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-	              }
-		
-		return true;
-}
-*/
 
 public ResultSet ConsultarInfoRadiobase(int IdRadiobase){
 
@@ -244,6 +192,25 @@ con=Conectar("ConsultaHab");
 	try {
 		st=con.createStatement();
 		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `Habilitacion`=true");
+		
+	}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+              }
+
+	return rs;
+}
+
+
+public ResultSet ConsultaDeshab(){
+	ResultSet rs=null;
+con=Conectar("ConsultaDeshab");
+	
+    Statement st;
+	
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT * FROM `radiobases` WHERE `Habilitacion`=false");
 		
 	}catch (SQLException e) {
 		// TODO Auto-generated catch block
