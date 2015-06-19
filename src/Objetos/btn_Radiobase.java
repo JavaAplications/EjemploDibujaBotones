@@ -9,7 +9,8 @@ public class btn_Radiobase extends JButton{
 	 */
 	private static final long serialVersionUID = 1L;
 	int ID;
-	public boolean alarmado;
+	String Telefono,Nombre,AcargoDE;
+	public boolean alarmado=false;
 
 //	static public boolean alarmado;
 	public void setAlarmado(boolean alarmado) {

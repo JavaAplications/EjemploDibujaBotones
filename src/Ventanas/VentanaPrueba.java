@@ -19,6 +19,7 @@ import Objetos.btn_Radiobase;
 import Timers.TemporizadorPintar;
 
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 public class VentanaPrueba extends JFrame {
 
@@ -38,13 +39,14 @@ public class VentanaPrueba extends JFrame {
 	
 	ThreadAlarmas CheckAlarmas;
 	private JPanel panel_1;
-	private JLabel lbl_ID;
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private JButton btn_Configuracion;
 	private JButton btn_Alarmas;
 	
 	ThreadGrafRadiosIDs HiloOnLineID;
+	public static JProgressBar progressBar_CargaRadios;
+	public static JLabel lbl_CantidadRadios;
 	public VentanaPrueba() {
 		
 		getContentPane().setLayout(new BorderLayout());
@@ -80,9 +82,7 @@ public class VentanaPrueba extends JFrame {
 		
 		btn_PintarRadOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			//	ThreadPintarBotones pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
-				//	pintar.start();
-				
+			
 				
 			}
 		});
@@ -130,12 +130,15 @@ public class VentanaPrueba extends JFrame {
 		panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		lbl_ID = new JLabel("ID");
-		panel_1.add(lbl_ID);
-		
 		
 		btn_Iniciar   =  new JButton("Encender");
 		panel_1.add(btn_Iniciar);
+		
+		progressBar_CargaRadios = new JProgressBar();
+		panel_1.add(progressBar_CargaRadios);
+		
+		lbl_CantidadRadios = new JLabel("0 RadioBases");
+		panel_1.add(lbl_CantidadRadios);
 		
 		panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.SOUTH);
@@ -156,15 +159,13 @@ public class VentanaPrueba extends JFrame {
 		
 		/////////////////////////// dibujar todo
 		
-		 		HiloOnLineID=new ThreadGrafRadiosIDs(panel);
+		 		HiloOnLineID=new ThreadGrafRadiosIDs(panel,lbl_CantidadRadios,progressBar_CargaRadios);
 				HiloOnLineID.start();
 		
-		
-	
+			
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 
-	
 	
 }

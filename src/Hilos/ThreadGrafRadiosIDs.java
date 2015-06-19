@@ -7,12 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
 import BBDD.Conexion;
 import Objetos.btn_Radiobase;
+import Ventanas.Ventana_Radiobase;
 
 
 public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
@@ -25,34 +28,48 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	int CantidadKA;
 	public static btn_Radiobase[] VectorBotones;
 	int CantidadRadiobases;
+	JLabel lbl_CantidadRadios;
+	JProgressBar BarraProgresoCarga;
 	
-	
-	public ThreadGrafRadiosIDs(JPanel jPanel1){
+	public ThreadGrafRadiosIDs(JPanel jPanel1,JLabel lbl_CantidadRadios,JProgressBar BarraProgresoCarga){
 		
 		this.jPanel1=jPanel1;
-	//	this.CantidadRadiobases=CantidadRadiobases;
+		this.lbl_CantidadRadios=lbl_CantidadRadios;
+		this.BarraProgresoCarga=BarraProgresoCarga;
 		
+	}
+	
+
+	private void BarradeProgreso(){
+
 		
 	}
 	
 	
 	public void run(){
+		
 		jPanel1.removeAll(); 
+		
 		con=new Conexion();
+		
+		
 		
 		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
 		CantidadRadiobases=con.CantidadRadiobases();	
 		int cantidad=CantidadRadiobases;
 		
-	
-		
+		lbl_CantidadRadios.setText(String.valueOf(cantidad));
+		BarraProgresoCarga.setMaximum(cantidad);
+		BarraProgresoCarga.setValue(0);
 		
 		
 	VectorBotones=new btn_Radiobase[cantidad];
-	
+	int c=1;
 		for( int i=1;i<cantidad+1;i++){
 			
 			IdRadio=i;
+			BarraProgresoCarga.setValue(c);
+			c++;
 			
 		    nombre=con.ConsultarNombre(i);
 	      
@@ -63,6 +80,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		btn_Radio.setAlarmado(false);
 		ResultSet rs=con.ConsultarInfoRadiobase(i);
 		String Info=null;
+		
 		try {
 			while(rs.next()){
 				
@@ -139,7 +157,12 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		int IdRadioBase=Integer.parseInt(nuero);
 		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
 		
-		JOptionPane.showMessageDialog(null, "HAY UNA ALARMA", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
+		//JOptionPane.showMessageDialog(null, "HAY UNA ALARMA", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
+		Ventana_Radiobase JFrameRadio=new Ventana_Radiobase();
+		//JFrameRadio.setTitle( VectorBotones[IdRadioBase-1].getText());
+		JFrameRadio.setTitle(String.valueOf(VectorBotones[IdRadioBase-1].getID()));
+		JFrameRadio.setVisible(true);
+		
 		
 	}
 	
