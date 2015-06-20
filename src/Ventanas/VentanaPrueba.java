@@ -20,6 +20,7 @@ import Timers.TemporizadorPintar;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import java.awt.Color;
 
 public class VentanaPrueba extends JFrame {
 
@@ -34,7 +35,7 @@ public class VentanaPrueba extends JFrame {
 	btn_Radiobase prueba;// es el boton que crea cada radiobase
 	
 	private JButton btn_PintarRadOnline;
-	JPanel panel;
+	static public JPanel panel;
 	Conexion con;
 	
 	ThreadAlarmas CheckAlarmas;
@@ -58,6 +59,10 @@ public class VentanaPrueba extends JFrame {
 		
 		AccionesBotones();
 	
+
+		   TemporizadorPintar timerPintar= new  TemporizadorPintar();
+			timerPintar.start();
+		
 	}
 	
 	
@@ -71,11 +76,10 @@ public class VentanaPrueba extends JFrame {
 				// TODO Auto-generated method stub
 				if(btn_Iniciar.getText().toString().equals("Encender"))
 				{	btn_Iniciar.setText("Detener");
-				timerPintar= new  TemporizadorPintar();
-				timerPintar.start();
+				
 					}else{
 					btn_Iniciar.setText("Encender");
-					timerPintar.Detener();
+					
 				}
 			}
 		});
@@ -83,6 +87,9 @@ public class VentanaPrueba extends JFrame {
 		btn_PintarRadOnline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
+
+				   TemporizadorPintar timerPintar= new  TemporizadorPintar();
+					timerPintar.start();
 				
 			}
 		});
@@ -130,11 +137,9 @@ public class VentanaPrueba extends JFrame {
 		panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		
-		btn_Iniciar   =  new JButton("Encender");
-		panel_1.add(btn_Iniciar);
-		
 		progressBar_CargaRadios = new JProgressBar();
+		progressBar_CargaRadios.setForeground(new Color(0, 0, 255));
+		progressBar_CargaRadios.setStringPainted(true);
 		panel_1.add(progressBar_CargaRadios);
 		
 		lbl_CantidadRadios = new JLabel("0 RadioBases");
@@ -160,6 +165,11 @@ public class VentanaPrueba extends JFrame {
 		/////////////////////////// dibujar todo
 		
 		 		HiloOnLineID=new ThreadGrafRadiosIDs(panel,lbl_CantidadRadios,progressBar_CargaRadios);
+		 		
+		 		
+		 		btn_Iniciar   =  new JButton("Encender");
+		 		
+		 		panel_1.add(btn_Iniciar);
 				HiloOnLineID.start();
 		
 			

@@ -21,10 +21,13 @@ public class TemporizadorPintar extends Thread {
 	public void run(){
 		while(stop){
 		
-		try {
-			Thread.sleep(1000);
 			pintar=new ThreadPintarBotones(ThreadGrafRadiosIDs.VectorBotones);
 			pintar.start();
+			pintar=null;
+		try {
+			
+			Thread.sleep(500);
+			
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();

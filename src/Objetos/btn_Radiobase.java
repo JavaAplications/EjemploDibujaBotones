@@ -24,6 +24,36 @@ public class btn_Radiobase extends JButton{
 	}
 
 
+	public String getTelefono() {
+		return Telefono;
+	}
+
+
+	public void setTelefono(String telefono) {
+		Telefono = telefono;
+	}
+
+
+	public String getNombre() {
+		return Nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
+
+
+	public String getAcargoDE() {
+		return AcargoDE;
+	}
+
+
+	public void setAcargoDE(String acargoDE) {
+		AcargoDE = acargoDE;
+	}
+
+
 	public boolean isAlarmado() {
 		return alarmado;
 	}

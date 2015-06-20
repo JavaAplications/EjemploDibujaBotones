@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 
 import BBDD.Conexion;
 import Objetos.btn_Radiobase;
+import Timers.TemporizadorPintar;
 import Ventanas.Ventana_Radiobase;
 
 
@@ -49,10 +50,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 	public void run(){
 		
 		jPanel1.removeAll(); 
-		
 		con=new Conexion();
-		
-		
 		
 		System.out.println("conectar bbdd ThreadGrafRadiosIDs");
 		CantidadRadiobases=con.CantidadRadiobases();	
@@ -83,9 +81,12 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		
 		try {
 			while(rs.next()){
-				
+				btn_Radio.setNombre( rs.getString("NomRadio"));
 				Info = rs.getString("NomRadio")+" | ";
+				
 				Info= Info + "Contacto: "+rs.getString("ContacRadio")+" | ";
+				
+				
 				Info= Info + "Tel: "+rs.getString("TelRadio")+" | ";
 				Info= Info + "Local: "+rs.getString("LocRadio")+" | ";
 				Info= Info + "Prov: "+rs.getString("ProvRadio");
@@ -98,18 +99,7 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		}
 		
 		btn_Radio.setToolTipText(Info);
-		btn_Radio.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				if((JButton)arg0.getSource()==btn_Radio){
-					
-					System.out.println(btn_Radio.getText().toString());
-				};
-			}
-			
-		});
-	
+		
 		btn_Radio.addActionListener(this);
 		
 		VectorBotones[i-1]=btn_Radio;
@@ -117,50 +107,26 @@ public class ThreadGrafRadiosIDs extends Thread implements ActionListener{
 		
 			jPanel1.add(btn_Radio);
 		
-			
-			btn_Radio.setVisible(true);
-			
-			
+	
 		}
-		
-		
-		ResultSet rs=con.ConsultaDeshab();
-		
-		   try {
-				while(rs.next()){
-					int RadioDesHabilitada=rs.getInt("IdRadios");	
-					System.out.println(" RadioDesHabilitada: "+RadioDesHabilitada);
-					VectorBotones[RadioDesHabilitada-1].setEnabled(false);
-					
-				
-				}
-			
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-	
+
 		SwingUtilities.updateComponentTreeUI(jPanel1);
-	
-		
-		
+
+
+			
 	con.Desconectar();
+	
 	}
 
 
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println(arg0.getActionCommand());	
-		
 		int Id=arg0.getActionCommand().indexOf(" ");
 		String nuero=arg0.getActionCommand().substring(3, Id);
 		int IdRadioBase=Integer.parseInt(nuero);
-		System.out.println(VectorBotones[IdRadioBase-1].getToolTipText());
-		
-		//JOptionPane.showMessageDialog(null, "HAY UNA ALARMA", VectorBotones[IdRadioBase-1].getText(), JOptionPane.INFORMATION_MESSAGE);
-		Ventana_Radiobase JFrameRadio=new Ventana_Radiobase();
-		//JFrameRadio.setTitle( VectorBotones[IdRadioBase-1].getText());
-		JFrameRadio.setTitle(String.valueOf(VectorBotones[IdRadioBase-1].getID()));
+		String ID=String.valueOf(VectorBotones[IdRadioBase-1].getID());
+		String nombre=VectorBotones[IdRadioBase-1].getNombre();
+			Ventana_Radiobase JFrameRadio=new Ventana_Radiobase(IdRadioBase);
+			JFrameRadio.setTitle("ID:"+ID+" - "+nombre);
 		JFrameRadio.setVisible(true);
 		
 		

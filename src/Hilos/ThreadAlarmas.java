@@ -16,9 +16,7 @@ public class ThreadAlarmas extends Thread{
 	public ThreadAlarmas(btn_Radiobase[] vectorBotones){
 	
 		this.vectorBotones=vectorBotones;
-		con=new Conexion();
-		
-		
+	
 	}
 	
 	public void detener(){
@@ -43,8 +41,16 @@ public class ThreadAlarmas extends Thread{
 		while(go)
 		{	
 			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		int alarma=1;//1 es OK de ahi en mas es alarma!!!
-				
+		con=new Conexion();
+		
+		/*
 		ResultSet rs=con.ConsultarAlarmasOnline();// devuelve toda slas alarmas
 		try {
 			while(rs.next()){
@@ -86,14 +92,14 @@ public class ThreadAlarmas extends Thread{
 			
 			}
 				
-			rs.close();
-			//con.Desconectar();
+		
+			con.Desconectar();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		
 	

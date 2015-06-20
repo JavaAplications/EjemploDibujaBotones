@@ -20,63 +20,52 @@ public  Connection Conectar(String nombre){
 	}
 	return con;
 }
-/*
-public void InsertarOnline(boolean IdOnLine,int IdRadiobase){
 
-	
-	con=Conectar("InsertarOnline");
-	
-	PreparedStatement pst;
-	try {
-		pst = con.prepareStatement("INSERT INTO online (IdOnline) VALUES (?) WHERE `IdRadios`='"+IdRadiobase+"'");
-	
-		pst.setBoolean(1,IdOnLine);
-		
-		pst.execute();
-		
-		
-		
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 
-	
-	
-	
-	
-}
-*/
-
-public ResultSet RadiobasesConectadas(){
-	
-	ResultSet rs=null;
-	
-	
-	
-	
-	
-	
-	return rs;
-}
-
-public void InsertarCheckedByIdRadio(int IdRadios){
+public void ActualizarRadiobase(int IdRadios,String NomRadio,String TelRadio,String LocRadio,String ProvRadio,String ContacRadio,boolean Habilitacion){
 
 	
 	con=Conectar("InsertarCheckedByIdRadio");
 	
 	PreparedStatement pst;
 	try {
-		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdRadios`='"+IdRadios+"'");
+		pst = con.prepareStatement("UPDATE radiobases SET `NomRadio` = ?,`TelRadio`=?,`LocRadio` = ?,`ProvRadio` = ?,`ContacRadio` = ?,`Habilitacion` = ? WHERE `IdRadios`='"+IdRadios+"'");
 	
-		pst.setBoolean(1,true);
+		pst.setString(1,NomRadio);
+		pst.setString(2,TelRadio);
+		pst.setString(3,LocRadio);
+		pst.setString(4,ProvRadio);
+		pst.setString(5,ContacRadio);
+		pst.setBoolean(6,Habilitacion);
 		
 		pst.execute();
-		//con.close();
+	
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+
+}
+
+
+public boolean ClearAlarmaIdRadio(int IdRadios,int IdAlarmas){
+
+	boolean salida=false;
+	con=Conectar("InsertarCheckedByIdRadio");
+	
+	PreparedStatement pst;
+	try {
+		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdRadios`='"+IdRadios+"' AND `IdAlarmas`='"+IdAlarmas+"'");
+	
+		pst.setBoolean(1,true);
+		
+		pst.execute();
+		salida=true;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return salida;
 
 }
 
@@ -116,8 +105,6 @@ con=Conectar("ConsultarRadiosOnline");
 	return rs;
 }
 
-
-
 public ResultSet ConsultarRadiosOffline(){
 
 con=Conectar("ConsultarRadiosOffline");
@@ -136,9 +123,6 @@ con=Conectar("ConsultarRadiosOffline");
 	
 	return rs;
 }
-
-
-
 
 public ResultSet ConsultarInfoRadiobase(int IdRadiobase){
 
@@ -267,18 +251,41 @@ public int CantidadRadiobases()
 	return cantidad;
 }
 
-public ResultSet ConsultarAlarmasOnline(){
+
+
+public ResultSet ConsultarTodasLasAlarmas(){
 	ResultSet rs=null;
-	con=Conectar("ConsultarAlarmasOnline");
+	con=Conectar("ConsultarTodasLasAlarmas");
 	Statement st;
 	try {
 		st=con.createStatement();
-		rs=st.executeQuery("SELECT * FROM `eventos` WHERE `Checked` =false" );
+		rs=st.executeQuery("SELECT `IdRadios`,`IdAlarmas`,`Tiempo` FROM `eventos` WHERE `Checked`=false ORDER BY `IdRadios`");
 		
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("sin alarmas");
+		
+	}
+	
+		return rs;
+	
+	
+}
+
+
+
+public ResultSet ConsultarAlarmaIdRadio(int IdRadio){
+	ResultSet rs=null;
+	con=Conectar("ConsultarAlarmasIdRadio");
+	Statement st;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT `IdAlarmas`,`Tiempo` FROM `eventos` WHERE (`IdRadios`="+IdRadio+" ) AND (`Checked`=false) ORDER BY `IdAlarmas`");
+		
+	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
 	}
 	
 		return rs;
