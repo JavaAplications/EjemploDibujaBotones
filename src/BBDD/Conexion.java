@@ -48,14 +48,14 @@ public void ActualizarRadiobase(int IdRadios,String NomRadio,String TelRadio,Str
 }
 
 
-public boolean ClearAlarmaIdRadio(int IdRadios,int IdAlarmas){
+public boolean ClearAlarmaIdRadio(int IdRadios){
 
 	boolean salida=false;
 	con=Conectar("InsertarCheckedByIdRadio");
 	
 	PreparedStatement pst;
 	try {
-		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdRadios`='"+IdRadios+"' AND `IdAlarmas`='"+IdAlarmas+"'");
+		pst = con.prepareStatement("UPDATE eventos SET `Checked` = ? WHERE `IdRadios`='"+IdRadios+"'");
 	
 		pst.setBoolean(1,true);
 		

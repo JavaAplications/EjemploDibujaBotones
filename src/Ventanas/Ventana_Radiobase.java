@@ -63,7 +63,7 @@ public class Ventana_Radiobase extends JFrame {
     private int AlarmaReinicio=7;
     
     private int AlarmaBateriaBaja=10;
-    
+    private JButton btnResetAlarmas;
    private JPanel panel;
     private JProgressBar barra;
     private JLabel label;
@@ -72,6 +72,8 @@ public class Ventana_Radiobase extends JFrame {
 	private JTextField edit_NombreRadiobase;
 	private JPanel panel_Intrusion,panel_Vibracion,panel_En_Baterias,panel_Apertura,panel_Reinicio,panel_BateriaBaja;
 	private JProgressBar progressBar_NivelBateria;
+	private JLabel lblClave;
+	private JTextField edit_Clave;
 	
 	public Ventana_Radiobase(int IdRadio) {
 		setResizable(false);
@@ -124,6 +126,31 @@ public class Ventana_Radiobase extends JFrame {
 			}
 		});
 		
+		btnResetAlarmas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Object[] options = { "OK", "Cancelar" };
+				int n= JOptionPane.showOptionDialog(null, "Desea Reconocer TODAS las ALarmas ?", "ALARMAS REMOTAS",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						null, options, options[0]);
+				       con=new Conexion();
+						if(n==JOptionPane.OK_OPTION){
+							if(con.ClearAlarmaIdRadio(IdRadio)){
+								panel_En_Baterias.setBackground(Color.GREEN);
+								panel_Apertura.setBackground(Color.GREEN);
+								panel_Vibracion.setBackground(Color.GREEN);
+								panel_BateriaBaja.setBackground(Color.GREEN);
+								panel_Intrusion.setBackground(Color.GREEN);
+								panel_Reinicio.setBackground(Color.GREEN);
+								
+							}
+							
+						}
+						con.Desconectar();
+				
+			}
+		});
+		
+		
 		panel_Intrusion.addMouseListener(new MouseListener() {
 			
 		
@@ -150,7 +177,7 @@ public class Ventana_Radiobase extends JFrame {
 				
 				if(n==JOptionPane.OK_OPTION){
 					
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaIntrusion)){panel_Intrusion.setBackground(Color.GREEN);}
+			
 					
 				}
 				
@@ -190,7 +217,6 @@ public class Ventana_Radiobase extends JFrame {
 				
 				if(n==JOptionPane.OK_OPTION){
 					
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaApertura)){panel_Apertura.setBackground(Color.GREEN);}
 					
 				}
 				
@@ -230,7 +256,7 @@ public class Ventana_Radiobase extends JFrame {
 				null, options, options[0]);
 				
 				if(n==JOptionPane.OK_OPTION){
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaEnergia)){panel_En_Baterias.setBackground(Color.GREEN);}
+				//	if(con.ClearAlarmaIdRadio(IdRadio,AlarmaEnergia)){panel_En_Baterias.setBackground(Color.GREEN);}
 					
 				}
 				
@@ -269,7 +295,7 @@ public class Ventana_Radiobase extends JFrame {
 				
 				if(n==JOptionPane.OK_OPTION){
 					
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaVibracion)){panel_Vibracion.setBackground(Color.GREEN);}
+				
 				}
 				
 			}
@@ -311,7 +337,7 @@ public class Ventana_Radiobase extends JFrame {
 				
 				if(n==JOptionPane.OK_OPTION){
 					
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaBateriaBaja)){panel_BateriaBaja.setBackground(Color.GREEN);}
+					
 				}
 				
 			}
@@ -350,7 +376,7 @@ public class Ventana_Radiobase extends JFrame {
 				
 				if(n==JOptionPane.OK_OPTION){
 					
-					if(con.ClearAlarmaIdRadio(IdRadio,AlarmaReinicio)){panel_Reinicio.setBackground(Color.GREEN);}
+					
 				}}
 		});
 		
@@ -423,7 +449,7 @@ public class Ventana_Radiobase extends JFrame {
 		
 		
 	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 492);
+		setBounds(100, 100, 474, 608);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -431,12 +457,12 @@ public class Ventana_Radiobase extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Informacion de la Radiobase", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 414, 432);
+		panel.setBounds(10, 11, 448, 558);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblPersonalACargo = new JLabel("Llamar a: ");
-		lblPersonalACargo.setBounds(10, 55, 66, 19);
+		lblPersonalACargo.setBounds(10, 55, 56, 19);
 		panel.add(lblPersonalACargo);
 		
 		JLabel lblNewLabel = new JLabel("N\u00B0 Telefono:");
@@ -444,78 +470,69 @@ public class Ventana_Radiobase extends JFrame {
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ciudad:");
-		lblNewLabel_1.setBounds(234, 52, 66, 24);
+		lblNewLabel_1.setBounds(234, 81, 66, 24);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblProvincia = new JLabel("Provincia: ");
-		lblProvincia.setBounds(235, 81, 66, 24);
+		lblProvincia.setBounds(235, 110, 66, 24);
 		panel.add(lblProvincia);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Alarmas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 160, 394, 150);
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Alarmas Remotas", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1.setBounds(10, 290, 428, 187);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		panel_Intrusion = new JPanel();
 		panel_Intrusion.setBorder(new TitledBorder(null, "INTRUSION", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_Intrusion.setBackground(new Color(0, 255, 0));
-		panel_Intrusion.setBounds(20, 22, 103, 46);
+		panel_Intrusion.setBounds(10, 20, 103, 46);
 		panel_1.add(panel_Intrusion);
 		panel_Intrusion.setLayout(new BorderLayout(0, 0));
 		
 		panel_Apertura = new JPanel();
 		panel_Apertura.setBorder(new TitledBorder(null, "APERTURA", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_Apertura.setBackground(new Color(0, 255, 0));
-		panel_Apertura.setBounds(143, 22, 103, 46);
+		panel_Apertura.setBounds(161, 20, 103, 46);
 		panel_1.add(panel_Apertura);
 		
 		panel_Vibracion = new JPanel();
 		panel_Vibracion.setBorder(new TitledBorder(null, "VIBRACION", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_Vibracion.setBackground(new Color(0, 255, 0));
-		panel_Vibracion.setBounds(269, 22, 103, 46);
+		panel_Vibracion.setBounds(315, 20, 103, 46);
 		panel_1.add(panel_Vibracion);
 		
 		panel_En_Baterias = new JPanel();
 		panel_En_Baterias.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "EN BATERIAS", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_En_Baterias.setBackground(new Color(0, 255, 0));
-		panel_En_Baterias.setBounds(20, 80, 103, 46);
+		panel_En_Baterias.setBounds(10, 78, 103, 46);
 		panel_1.add(panel_En_Baterias);
 		panel_En_Baterias.setLayout(new BorderLayout(0, 0));
 		
 		panel_Reinicio = new JPanel();
 		panel_Reinicio.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "REINICIO", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_Reinicio.setBackground(new Color(0, 255, 0));
-		panel_Reinicio.setBounds(143, 79, 103, 46);
+		panel_Reinicio.setBounds(161, 77, 103, 46);
 		panel_1.add(panel_Reinicio);
 		
 		panel_BateriaBaja = new JPanel();
 		panel_BateriaBaja.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "BATERIA BAJA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_BateriaBaja.setBackground(new Color(0, 255, 0));
-		panel_BateriaBaja.setBounds(269, 80, 103, 46);
+		panel_BateriaBaja.setBounds(315, 78, 103, 46);
 		panel_1.add(panel_BateriaBaja);
 		
-		progressBar_NivelBateria = new JProgressBar();
-		progressBar_NivelBateria.setBounds(70, 116, 91, 26);
-		panel.add(progressBar_NivelBateria);
-		progressBar_NivelBateria.setStringPainted(true);
-		progressBar_NivelBateria.setForeground(new Color(50, 205, 50));
-		progressBar_NivelBateria.setToolTipText("");
-		progressBar_NivelBateria.setBackground(Color.BLACK);
-		progressBar_NivelBateria.setValue(50);
+		btnResetAlarmas = new JButton("RECONOCER ALARMAS");
+		btnResetAlarmas.setBounds(10, 135, 201, 41);
+		panel_1.add(btnResetAlarmas);
 		
-		JLabel lblBateria = new JLabel("Bateria:");
-		lblBateria.setBounds(10, 116, 50, 24);
-		panel.add(lblBateria);
+		JButton btnFotosYVideos = new JButton("FOTOS Y VIDEOS");
+		btnFotosYVideos.setBounds(221, 135, 197, 41);
+		panel_1.add(btnFotosYVideos);
 		
-		JButton btnNewButton = new JButton("Modificar");
-	
-		btnNewButton.setBounds(10, 317, 91, 36);
-		panel.add(btnNewButton);
 		
 		edit_Contacto = new JTextField();
 		edit_Contacto.setEditable(false);
-		edit_Contacto.setBounds(80, 54, 137, 20);
+		edit_Contacto.setBounds(80, 54, 358, 20);
 		panel.add(edit_Contacto);
 		edit_Contacto.setColumns(10);
 		
@@ -529,23 +546,19 @@ public class Ventana_Radiobase extends JFrame {
 		edit_Ciudad.setEditable(false);
 		edit_Ciudad.setText("                         ");
 		edit_Ciudad.setColumns(10);
-		edit_Ciudad.setBounds(306, 54, 98, 20);
+		edit_Ciudad.setBounds(301, 83, 137, 20);
 		panel.add(edit_Ciudad);
 		
 		edit_Provincia = new JTextField();
 		edit_Provincia.setEditable(false);
 		edit_Provincia.setText("                         ");
 		edit_Provincia.setColumns(10);
-		edit_Provincia.setBounds(306, 83, 98, 20);
+		edit_Provincia.setBounds(301, 114, 137, 20);
 		panel.add(edit_Provincia);
 		
-		JButton btnResetAlarmas = new JButton("Reset");
-		btnResetAlarmas.setBounds(111, 317, 91, 36);
-		panel.add(btnResetAlarmas);
-		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Enviar Comando al Telefono", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(20, 360, 384, 59);
+		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Enviar Comando GSM", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_2.setBounds(10, 488, 428, 59);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -555,13 +568,12 @@ public class Ventana_Radiobase extends JFrame {
 		textField_4.setColumns(10);
 		
 		JButton btnEnviar = new JButton("Enviar");
-		btnEnviar.setBounds(224, 11, 150, 40);
+		btnEnviar.setBounds(258, 20, 150, 32);
 		panel_2.add(btnEnviar);
 		
-		chBox_Habilitacion = new JCheckBox("Habilitacion");
+		chBox_Habilitacion = new JCheckBox("Habilitar Radiobase");
 		chBox_Habilitacion.setEnabled(false);
-		chBox_Habilitacion.setHorizontalAlignment(SwingConstants.CENTER);
-		chBox_Habilitacion.setBounds(307, 116, 97, 23);
+		chBox_Habilitacion.setBounds(10, 149, 152, 23);
 		panel.add(chBox_Habilitacion);
 		
 		
@@ -569,7 +581,7 @@ public class Ventana_Radiobase extends JFrame {
 		
 		
 		chckbxModificarDatos = new JCheckBox("Modificar Datos");
-		chckbxModificarDatos.setBounds(264, 324, 128, 23);
+		chckbxModificarDatos.setBounds(286, 149, 152, 23);
 		panel.add(chckbxModificarDatos);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estaci\u00F3n:");
@@ -579,8 +591,56 @@ public class Ventana_Radiobase extends JFrame {
 		edit_NombreRadiobase = new JTextField();
 		edit_NombreRadiobase.setFont(new Font("Tahoma", Font.BOLD, 12));
 		edit_NombreRadiobase.setEditable(false);
-		edit_NombreRadiobase.setBounds(80, 21, 324, 20);
+		edit_NombreRadiobase.setBounds(80, 21, 358, 20);
 		panel.add(edit_NombreRadiobase);
 		edit_NombreRadiobase.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Telemetr\u00EDa GSM", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_3.setBounds(10, 179, 428, 100);
+		panel.add(panel_3);
+		panel_3.setLayout(null);
+		
+		progressBar_NivelBateria = new JProgressBar();
+		progressBar_NivelBateria.setBounds(111, 26, 91, 17);
+		panel_3.add(progressBar_NivelBateria);
+		progressBar_NivelBateria.setStringPainted(true);
+		progressBar_NivelBateria.setForeground(new Color(50, 205, 50));
+		progressBar_NivelBateria.setToolTipText("");
+		progressBar_NivelBateria.setBackground(Color.BLACK);
+		progressBar_NivelBateria.setValue(50);
+		
+		JLabel lblBateria = new JLabel("Bateria:");
+		lblBateria.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBateria.setBounds(10, 21, 50, 24);
+		panel_3.add(lblBateria);
+		
+		JLabel lblAlmacenamiento = new JLabel("Almacenamiento: ");
+		lblAlmacenamiento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAlmacenamiento.setBounds(10, 54, 91, 24);
+		panel_3.add(lblAlmacenamiento);
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setValue(50);
+		progressBar.setToolTipText("");
+		progressBar.setStringPainted(true);
+		progressBar.setForeground(Color.RED);
+		progressBar.setBackground(Color.BLACK);
+		progressBar.setBounds(111, 59, 91, 17);
+		panel_3.add(progressBar);
+		
+		JButton btnNewButton = new JButton("Medicion");
+		btnNewButton.setBounds(276, 26, 142, 52);
+		panel_3.add(btnNewButton);
+		
+		lblClave = new JLabel("Clave:");
+		lblClave.setBounds(10, 111, 72, 24);
+		panel.add(lblClave);
+		
+		edit_Clave = new JTextField();
+		edit_Clave.setEditable(false);
+		edit_Clave.setColumns(10);
+		edit_Clave.setBounds(80, 115, 137, 20);
+		panel.add(edit_Clave);
 	}
 }

@@ -63,8 +63,35 @@ public class ThreadPintarBotones extends Thread{
 						 while(rsAlarmas.next()){
 							 int IdRadioAlarma=rsAlarmas.getInt("IdRadios");
 							
+							 int IdAlarma=rsAlarmas.getInt("IdAlarmas");
+							   
+							 
+							 
 							 if(RadioOnLine==IdRadioAlarma){
-							 alarmado=true;}
+								 
+								switch (IdAlarma) {
+								case 1:
+									//ok
+									break;
+								case 9:
+								//
+									break;
+								case 8:
+									
+									break;
+								case 6:
+									
+									break;
+
+								default:
+									// 2,3,4,5,7,10,11,12
+									alarmado=true;
+									break;
+								} 
+								 
+								 
+								 
+							 }
 						    }
 						 
 						 rsAlarmas.beforeFirst();
