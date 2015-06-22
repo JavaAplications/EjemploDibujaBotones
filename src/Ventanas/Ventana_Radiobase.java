@@ -387,6 +387,7 @@ public class Ventana_Radiobase extends JFrame {
 		con=new Conexion();
 		ResultSet rs=con.ConsultarInfoRadiobase(IdRadio);
 		ResultSet rsAlarmas=con.ConsultarAlarmaIdRadio(IdRadio);
+		ResultSet rsBateria =con.ConsultarBateria(IdRadio);
 		try {
 			while(rs.next()){
 				edit_Contacto.setText(rs.getString("ContacRadio"));
@@ -398,6 +399,11 @@ public class Ventana_Radiobase extends JFrame {
 					
 			}
 			
+			while(rsBateria.next()){
+				int nivel=rsBateria.getInt("NivelBateria");
+			
+				progressBar_NivelBateria.setValue(nivel);
+			}
 				while(rsAlarmas.next()){
 					
 					int Alarma=rsAlarmas.getInt("IdAlarmas");
@@ -615,19 +621,19 @@ public class Ventana_Radiobase extends JFrame {
 		lblBateria.setBounds(10, 21, 50, 24);
 		panel_3.add(lblBateria);
 		
-		JLabel lblAlmacenamiento = new JLabel("Almacenamiento: ");
+		JLabel lblAlmacenamiento = new JLabel("Espacio en SD:");
 		lblAlmacenamiento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlmacenamiento.setBounds(10, 54, 91, 24);
 		panel_3.add(lblAlmacenamiento);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(50);
-		progressBar.setToolTipText("");
-		progressBar.setStringPainted(true);
-		progressBar.setForeground(Color.RED);
-		progressBar.setBackground(Color.BLACK);
-		progressBar.setBounds(111, 59, 91, 17);
-		panel_3.add(progressBar);
+		JProgressBar progressBar_Almacenamiento = new JProgressBar();
+		progressBar_Almacenamiento.setValue(50);
+		progressBar_Almacenamiento.setToolTipText("");
+		progressBar_Almacenamiento.setStringPainted(true);
+		progressBar_Almacenamiento.setForeground(Color.RED);
+		progressBar_Almacenamiento.setBackground(Color.BLACK);
+		progressBar_Almacenamiento.setBounds(111, 59, 91, 17);
+		panel_3.add(progressBar_Almacenamiento);
 		
 		JButton btnNewButton = new JButton("Medicion");
 		btnNewButton.setBounds(276, 26, 142, 52);

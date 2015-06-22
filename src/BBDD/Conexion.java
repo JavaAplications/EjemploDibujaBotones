@@ -272,6 +272,25 @@ public ResultSet ConsultarTodasLasAlarmas(){
 	
 }
 
+public ResultSet ConsultarBateria(int IdRadio){
+	ResultSet rs=null;
+//	SELECT `NivelBateria`,`TimeKA` FROM `keepalive`order by `IdKA` desc limit 1
+	
+	con=Conectar("ConsultarAlarmasIdRadio");
+	Statement st;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT `NivelBateria`,`TimeKA` FROM `keepalive` WHERE `IdRadios`= "+IdRadio+"  ORDER BY `IdKA` desc limit 1");
+		
+	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+	}
+	
+	
+	return rs;
+}
 
 
 public ResultSet ConsultarAlarmaIdRadio(int IdRadio){
