@@ -1,6 +1,8 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.awt.FileDialog;
 import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
@@ -8,11 +10,11 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import BBDD.Conexion;
-
 import Hilos.ThreadGrafRadiosIDs;
 import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
@@ -20,7 +22,10 @@ import Timers.TemporizadorPintar;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 
 public class VentanaPrueba extends JFrame {
 
@@ -155,6 +160,13 @@ public class VentanaPrueba extends JFrame {
 		panel_3.add(btn_PintarRadOnline);
 		
 		btn_Configuracion = new JButton("CONFIGURACION");
+		btn_Configuracion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+				
+				
+			}
+		});
 		panel_3.add(btn_Configuracion);
 		
 		btn_Alarmas = new JButton("Alarmas ON");
