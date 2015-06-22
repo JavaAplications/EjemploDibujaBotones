@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import BBDD.Conexion;
-import Hilos.ThreadAlarmas;
+
 import Hilos.ThreadGrafRadiosIDs;
 import Hilos.ThreadPintarBotones;
 import Objetos.btn_Radiobase;
@@ -38,7 +38,7 @@ public class VentanaPrueba extends JFrame {
 	static public JPanel panel;
 	Conexion con;
 	
-	ThreadAlarmas CheckAlarmas;
+	
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_3;
@@ -99,10 +99,9 @@ public class VentanaPrueba extends JFrame {
 				
 				if(btn_Alarmas.getText().toString().equals("Alarmas ON")){
 					btn_Alarmas.setText("Alarmas OFF");
-				CheckAlarmas=new ThreadAlarmas(ThreadGrafRadiosIDs.VectorBotones);
-				CheckAlarmas.start();}else{
+			}else{
 					btn_Alarmas.setText("Alarmas ON");
-					CheckAlarmas.detener();
+					
 				}
 				
 			}
