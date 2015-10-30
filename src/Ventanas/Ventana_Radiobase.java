@@ -16,6 +16,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -45,6 +46,7 @@ public class Ventana_Radiobase extends JFrame {
 	/**
 	 * 
 	 */
+	private static final Pattern PORCENTUAL = Pattern.compile("%");
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField edit_Contacto;
@@ -387,7 +389,14 @@ public class Ventana_Radiobase extends JFrame {
 		con=new Conexion();
 		ResultSet rs=con.ConsultarInfoRadiobase(IdRadio);
 		ResultSet rsAlarmas=con.ConsultarAlarmaIdRadio(IdRadio);
-		ResultSet rsBateria =con.ConsultarBateria(IdRadio);
+		
+		String nivelString =con.ConsultarBateria(IdRadio);
+		String[] arr = PORCENTUAL.split(nivelString); // str is the string to be split
+	//	System.out.println("BATERIA: "+arr[0]);
+		
+		
+		int nivel=Integer.parseInt(arr[0]);
+		progressBar_NivelBateria.setValue(nivel);
 		try {
 			while(rs.next()){
 				edit_Contacto.setText(rs.getString("ContacRadio"));
@@ -399,11 +408,7 @@ public class Ventana_Radiobase extends JFrame {
 					
 			}
 			
-			while(rsBateria.next()){
-				int nivel=rsBateria.getInt("NivelBateria");
-			
-				progressBar_NivelBateria.setValue(nivel);
-			}
+		
 				while(rsAlarmas.next()){
 					
 					int Alarma=rsAlarmas.getInt("IdAlarmas");
@@ -419,8 +424,8 @@ public class Ventana_Radiobase extends JFrame {
 					case 4:
 						panel_En_Baterias.setBackground(Color.YELLOW);
 						break;
-					case 13:
-						panel_Vibracion.setBackground(Color.YELLOW);
+					case 5:
+						panel_En_Baterias.setBackground(Color.GREEN);
 						break;
 					case 7:
 						panel_Reinicio.setBackground(Color.YELLOW);

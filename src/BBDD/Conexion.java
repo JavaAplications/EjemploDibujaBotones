@@ -271,8 +271,9 @@ public ResultSet ConsultarTodasLasAlarmas(){
 	
 	
 }
-
+/*
 public ResultSet ConsultarBateria(int IdRadio){
+	con=Conectar("ConsultarBateria");
 	ResultSet rs=null;
 //	SELECT `NivelBateria`,`TimeKA` FROM `keepalive`order by `IdKA` desc limit 1
 	
@@ -291,7 +292,7 @@ public ResultSet ConsultarBateria(int IdRadio){
 	
 	return rs;
 }
-
+*/
 
 public ResultSet ConsultarAlarmaIdRadio(int IdRadio){
 	ResultSet rs=null;
@@ -311,6 +312,31 @@ public ResultSet ConsultarAlarmaIdRadio(int IdRadio){
 	
 	
 }
+
+
+
+public String ConsultarBateria(int IdRadio){
+	
+	con=Conectar("ConsultarBateria");
+	Statement st;
+	ResultSet rs=null;
+	String nivel = null;
+	try {
+		st=con.createStatement();
+		rs=st.executeQuery("SELECT `NivelBat` FROM `status` WHERE `IdRadios`='"+IdRadio+"' ORDER BY `IdStatus` DESC LIMIT 1 	");
+		while(rs.next()){
+			nivel= rs.getString("NivelBat");
+			}
+	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			nivel="Desconocido";
+	}
+	 //Desconectar();
+	return nivel;
+}
+
+
 
 public void Desconectar(){
 	

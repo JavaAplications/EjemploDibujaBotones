@@ -35,11 +35,9 @@ public class VentanaPrueba extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	TemporizadorPintar timerPintar;
-	JButton btn_InsertarRadiosOnline,btn_Iniciar;
+	JButton btn_Iniciar;
 
 	btn_Radiobase prueba;// es el boton que crea cada radiobase
-	
-	private JButton btn_PintarRadOnline;
 	static public JPanel panel;
 	Conexion con;
 	
@@ -47,8 +45,6 @@ public class VentanaPrueba extends JFrame {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JPanel panel_3;
-	private JButton btn_Configuracion;
-	private JButton btn_Alarmas;
 	
 	ThreadGrafRadiosIDs HiloOnLineID;
 	public static JProgressBar progressBar_CargaRadios;
@@ -89,35 +85,7 @@ public class VentanaPrueba extends JFrame {
 			}
 		});
 		
-		btn_PintarRadOnline.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
-
-				   TemporizadorPintar timerPintar= new  TemporizadorPintar();
-					timerPintar.start();
-				
-			}
-		});
 		
-		btn_Alarmas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if(btn_Alarmas.getText().toString().equals("Alarmas ON")){
-					btn_Alarmas.setText("Alarmas OFF");
-			}else{
-					btn_Alarmas.setText("Alarmas ON");
-					
-				}
-				
-			}
-		});
-		
-		btn_InsertarRadiosOnline.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			   
-				
-			}
-		});
 		
 	}
 
@@ -125,9 +93,6 @@ public class VentanaPrueba extends JFrame {
 
 
 	private void CrearComponentes(){
-		btn_InsertarRadiosOnline =  new JButton("Insertar Radios Online");
-	
-		getContentPane().add(btn_InsertarRadiosOnline, BorderLayout.EAST);
 		
 		panel=new JPanel();
 		ScrollPane barras=new ScrollPane();
@@ -155,23 +120,6 @@ public class VentanaPrueba extends JFrame {
 		panel_3 = new JPanel();
 		getContentPane().add(panel_3, BorderLayout.WEST);
 		panel_3.setLayout(new GridLayout(0, 1, 0, 0));
-		btn_PintarRadOnline =  new JButton("Pintar Online");
-		
-		panel_3.add(btn_PintarRadOnline);
-		
-		btn_Configuracion = new JButton("CONFIGURACION");
-		btn_Configuracion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
-				
-				
-			}
-		});
-		panel_3.add(btn_Configuracion);
-		
-		btn_Alarmas = new JButton("Alarmas ON");
-	
-		panel_3.add(btn_Alarmas);
 		
 		/////////////////////////// dibujar todo
 		
